@@ -14,6 +14,7 @@ public class MainController {
 
     @GetMapping("/")
     public String main(Model model) {
+        System.out.println("aadadsa");
         model.addAttribute("title", "Главная");
         return "index";
     }
