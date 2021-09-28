@@ -1,5 +1,5 @@
-<#import "blocks/base.ftl" as base>
-<#import "blocks/header.ftl" as h>
+<#import "blocks/base.ftlh" as base>
+<#import "blocks/header.ftlh" as h>
 
 <@base.page title="Главная">
     <@h.header />
@@ -18,7 +18,7 @@
                     <h1 class="display-5 fw-bold lh-1 mb-3">${company.name}</h1>
                     <p class="lead">${company.description}</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <a href="/company" class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Перейти</a>
+                        <a href="/company/${company.id}" class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Перейти</a>
                     </div>
                 </div>
             </div>

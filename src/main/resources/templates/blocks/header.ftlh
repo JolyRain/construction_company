@@ -16,7 +16,10 @@
                     </a>
                 </div>
                 <div class="nav nav-pills justify-content-end col py-1">
-                    <a class="btn btn-outline-dark">Подобрать квартиру</a>
+                    <a href="/apartments" class="btn btn-outline-dark">Подобрать квартиру</a>
+                </div>
+                <div class="nav nav-pills justify-content-end col py-1">
+                    <a href="/admin" class="btn btn-outline-dark">Админка</a>
                 </div>
             </div>
         </header>
