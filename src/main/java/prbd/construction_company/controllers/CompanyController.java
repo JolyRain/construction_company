@@ -10,6 +10,7 @@ import prbd.construction_company.entities.House;
 import prbd.construction_company.repositories.CompanyRep;
 import prbd.construction_company.repositories.HouseRep;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller("/company")
@@ -22,11 +23,15 @@ public class CompanyController {
 
     @GetMapping("/company/{id}")
     public String company(@PathVariable String id, Model model) {
-        Optional<ConstructionCompany> optionalCompany = companyRep.findById(Integer.parseInt(id));    //исправить эту гадость
-        ConstructionCompany company = optionalCompany.get();
-        Iterable<House> houses = houseRep.findAllByCompany(company);
-        model.addAttribute("company", company);
-        model.addAttribute("houses", houses);
-        return "company";
+        try {
+            Optional<ConstructionCompany> optionalCompany = companyRep.findById(Integer.parseInt(id));    //исправить эту гадость
+            ConstructionCompany company = optionalCompany.get();
+            Iterable<House> houses = houseRep.findAllByCompany(company);
+            model.addAttribute("company", company);
+            model.addAttribute("houses", houses);
+            return "company";
+        } catch (NumberFormatException | NoSuchElementException e) {
+            return "redirect:/";
+        }
     }
 }

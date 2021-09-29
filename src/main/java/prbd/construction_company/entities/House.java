@@ -35,17 +35,21 @@ public class House {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "house", orphanRemoval = true)
     private Set<Apartment> apartments;
 
+    @Column(name = "photo")
+    private String photo;
+
     public House() {
     }
 
     public House(ConstructionCompany company, String address, String name,
-                 LocalDate startDate, LocalDate completeDate, LocalDate exploitDate) {
+                 LocalDate startDate, LocalDate completeDate, LocalDate exploitDate, String photo) {
         this.company = company;
         this.address = address;
         this.name = name;
         this.startDate = startDate;
         this.completeDate = completeDate;
         this.exploitDate = exploitDate;
+        this.photo = photo;
     }
 
     public House(ConstructionCompany company, String address, String name) {
@@ -108,5 +112,21 @@ public class House {
 
     public void setExploitDate(LocalDate exploitDate) {
         this.exploitDate = exploitDate;
+    }
+
+    public Set<Apartment> getApartments() {
+        return apartments;
+    }
+
+    public void setApartments(Set<Apartment> apartments) {
+        this.apartments = apartments;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

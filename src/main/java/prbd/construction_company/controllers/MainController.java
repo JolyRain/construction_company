@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import prbd.construction_company.entities.ConstructionCompany;
 import prbd.construction_company.repositories.CompanyRep;
 
-@Controller
+@Controller("/")
 public class MainController {
 
     @Autowired

@@ -41,11 +41,14 @@ public class Apartment {
     @ManyToMany(mappedBy = "apartments")
     private Set<Client> owners;
 
+    @Column(name = "layout_img")
+    private String layoutImg;
+
     public Apartment() {
     }
 
     public Apartment(int number, House house, int entranceNumber, int floorNumber, int roomsCount,
-                     float totalArea, float livingArea, int price, SaleStatus status) {
+                     float totalArea, float livingArea, int price, SaleStatus status, String layoutImg) {
         this.number = number;
         this.house = house;
         this.entranceNumber = entranceNumber;
@@ -55,6 +58,7 @@ public class Apartment {
         this.livingArea = livingArea;
         this.price = price;
         this.status = status;
+        this.layoutImg = layoutImg;
     }
 
     public Apartment(int number, House house, int entranceNumber, int floorNumber, int roomsCount) {
@@ -151,5 +155,13 @@ public class Apartment {
 
     public void setOwners(Set<Client> owners) {
         this.owners = owners;
+    }
+
+    public String getLayoutImg() {
+        return layoutImg;
+    }
+
+    public void setLayoutImg(String layoutImg) {
+        this.layoutImg = layoutImg;
     }
 }

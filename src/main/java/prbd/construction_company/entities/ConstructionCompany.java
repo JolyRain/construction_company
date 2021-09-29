@@ -20,6 +20,9 @@ public class ConstructionCompany {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", orphanRemoval = true)
     private Set<House> houses;
 
+    @Column(name = "logo")
+    private String logo;
+
     public ConstructionCompany() {
     }
 
