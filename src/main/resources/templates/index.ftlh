@@ -1,7 +1,7 @@
 <#import "blocks/base.ftlh" as base>
 <#import "blocks/header.ftlh" as h>
 
-<@base.page title="Главная">
+<@base.page title=title>
     <@h.header />
     <div class="px-4 py-5 my-5 text-center">
         <h1 class="display-5 fw-bold">Строительные компании</h1>

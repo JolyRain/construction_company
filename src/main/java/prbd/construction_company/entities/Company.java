@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "constr_company")
-public class ConstructionCompany {
+public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +23,21 @@ public class ConstructionCompany {
     @Column(name = "logo")
     private String logo;
 
-    public ConstructionCompany() {
+    public Company() {
     }
 
-    public ConstructionCompany(int id, String name, String description) {
+    public Company(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public ConstructionCompany(String name, String description) {
+    public Company(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public ConstructionCompany(String name) {
+    public Company(String name) {
         this.name = name;
     }
 

@@ -15,7 +15,7 @@ public class House {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company", nullable = false)
-    private ConstructionCompany company;
+    private Company company;
 
     @Column(name = "address", nullable = false, unique = true)
     private String address;
@@ -41,7 +41,7 @@ public class House {
     public House() {
     }
 
-    public House(ConstructionCompany company, String address, String name,
+    public House(Company company, String address, String name,
                  LocalDate startDate, LocalDate completeDate, LocalDate exploitDate, String photo) {
         this.company = company;
         this.address = address;
@@ -52,7 +52,7 @@ public class House {
         this.photo = photo;
     }
 
-    public House(ConstructionCompany company, String address, String name) {
+    public House(Company company, String address, String name) {
         this.company = company;
         this.address = address;
         this.name = name;
@@ -66,11 +66,11 @@ public class House {
         this.id = id;
     }
 
-    public ConstructionCompany getCompany() {
+    public Company getCompany() {
         return company;
     }
 
-    public void setCompany(ConstructionCompany company) {
+    public void setCompany(Company company) {
         this.company = company;
     }
 

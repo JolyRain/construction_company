@@ -8,18 +8,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
 import prbd.construction_company.repositories.ApartmentRep;
+import prbd.construction_company.repositories.CompanyRep;
 import prbd.construction_company.repositories.HouseRep;
+import prbd.construction_company.services.ApartmentFilter;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller("/apartments")
 public class ApartmentController {
 
-    @Autowired
-    private ApartmentRep apartmentRep;
+    private final ApartmentRep apartmentRep;
+    private final HouseRep houseRep;
+    private final CompanyRep companyRep;
+    private final ApartmentFilter filter;
 
     @Autowired
-    private HouseRep houseRep;
+    public ApartmentController(ApartmentRep apartmentRep, HouseRep houseRep, CompanyRep companyRep, ApartmentFilter filter) {
+        this.apartmentRep = apartmentRep;
+        this.houseRep = houseRep;
+        this.companyRep = companyRep;
+        this.filter = filter;
+    }
+
 
     @GetMapping("/apartments/{house_id}")
     public String houseApartments(Model model, @PathVariable String house_id) {
@@ -37,8 +48,16 @@ public class ApartmentController {
 
     @GetMapping("/apartments")
     public String allApartments(Model model) {
-        Iterable<Apartment> apartments = apartmentRep.findAll();
+        List<Apartment> apartments = apartmentRep.findAll();
+        model.addAttribute("maxRooms", filter.maxRoomsCount());
+        model.addAttribute("minRooms", filter.minRoomsCount());
+        model.addAttribute("maxFloor", filter.maxFloor());
+        model.addAttribute("minFloor", filter.minFloor());
+        model.addAttribute("minPrice", filter.minPrice());
+        model.addAttribute("maxPrice", filter.maxPrice());
         model.addAttribute("apartments", apartments);
+        model.addAttribute("houses", houseRep.findAll());
+        model.addAttribute("companies", companyRep.findAll());
         return "apartments";
     }
 
