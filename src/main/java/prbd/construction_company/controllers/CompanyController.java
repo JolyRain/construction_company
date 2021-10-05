@@ -9,30 +9,28 @@ import prbd.construction_company.entities.Company;
 import prbd.construction_company.entities.House;
 import prbd.construction_company.repositories.CompanyRep;
 import prbd.construction_company.repositories.HouseRep;
+import prbd.construction_company.services.CompanyService;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller("/company")
 public class CompanyController {
 
-    private final CompanyRep companyRep;
-    private final HouseRep houseRep;
+    private final CompanyService companyService;
 
     @Autowired
-    public CompanyController(CompanyRep companyRep, HouseRep houseRep) {
-        this.companyRep = companyRep;
-        this.houseRep = houseRep;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
     }
 
     @GetMapping("/company/{id}")
     public String company(@PathVariable String id, Model model) {
         try {
-            Optional<Company> optionalCompany = companyRep.findById(Integer.parseInt(id));    //исправить эту гадость
-            Company company = optionalCompany.get();
-            Iterable<House> houses = houseRep.findAllByCompany(company);
+            Company company = companyService.getCompanyById(Integer.parseInt(id)); //чето придумать нада
             model.addAttribute("company", company);
-            model.addAttribute("houses", houses);
+            model.addAttribute("houses", company.getHouses());
             model.addAttribute("title", "Компания " + company.getName());
             return "company";
         } catch (NumberFormatException | NoSuchElementException e) {

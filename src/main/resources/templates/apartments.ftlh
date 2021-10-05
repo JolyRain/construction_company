@@ -26,8 +26,8 @@
         <h1 class="display-5 fw-bold">Квартиры</h1>
     </div>
     <div class="container p-3">
-        <form class="form-inline d-md-inline-flex">
-            <div class="form-group mb-2 mx-2">
+        <form class="row align-items-center" method="get" action="/apartments/filter">
+            <div class="col-auto">
                 <label for="company">Строительная компания</label>
                 <select class="form-control" name="company" id="company">
                     <option value="all">Все</option>
@@ -36,7 +36,7 @@
                     </#list>
                 </select>
             </div>
-            <div class="form-group mb-2 mx-2">
+            <div class="col-auto">
                 <label for="houses">Дом</label>
                 <select class="form-control" name="house" id="houses">
                     <option value="all">Все</option>
@@ -45,21 +45,53 @@
                     </#list>
                 </select>
             </div>
-            <div class="form-group mb-2 mx-2">
+            <div class="col-auto">
                 <label for="roomsCount">Кол-во комнат</label>
                 <select class="form-control" name="roomsCount" id="roomsCount">
                     <option>Все</option>
-                    <#list minRooms..maxRooms as i>
-                        <option>${i}</option>
+                    <#list minRooms..maxRooms as roomsCount>
+                        <option value="${roomsCount}">${roomsCount}</option>
                     </#list>
                 </select>
             </div>
-            <div class="form-group mx-sm-3 mb-2">
-                <label for="price" class="form-label">Этаж</label>
-                <input type="range" class="form-range" min="${minFloor}" max="${maxFloor}" step="1" name="price"
-                       id="price">
+            <div class="col-auto">
+                <label for="floorFrom">Этаж</label>
+                <div class="d-inline-flex">
+                    <input type="text" class="form-control from" name="floorFrom" id="floorFrom"
+                           placeholder="от" oninput="filterInput(this)">
+                    <input type="text" class="form-control" name="floorTo" id="floorTo"
+                           placeholder="до" oninput="filterInput(this)">
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary m-2">Подобрать</button>
+            <div class="col-auto">
+                <label for="priceFrom">Цена, руб</label>
+                <div class="d-inline-flex">
+                    <input type="text" class="form-control" name="priceFrom" id="priceFrom"
+                           placeholder="от" oninput="filterInput(this)">
+                    <input type="text" class="form-control" name="priceTo" id="priceTo"
+                           placeholder="до" oninput="filterInput(this)">
+                </div>
+            </div>
+            <div class="col-auto">
+                <label for="areaFrom">Площадь, м<sup>2</sup></label>
+                <div class="d-inline-flex">
+                    <input type="text" class="form-control" name="areaFrom" id="areaFrom"
+                           placeholder="от" oninput="filterInput(this)">
+                    <input type="text" class="form-control" name="areaTo" id="areaTo"
+                           placeholder="до" oninput="filterInput(this)">
+                </div>
+            </div>
+            <div class="col-auto">
+                <label for="status" class="">Статус продажи</label>
+                <select class="form-select" name="status" id="status">
+                    <#list status as s>
+                        <option value="${s}">${s}</option>
+                    </#list>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary m-2">Подобрать</button>
+            </div>
         </form>
     </div>
     <div class="container">

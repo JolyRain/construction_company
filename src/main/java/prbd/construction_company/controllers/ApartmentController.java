@@ -3,32 +3,32 @@ package prbd.construction_company.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
 import prbd.construction_company.repositories.ApartmentRep;
 import prbd.construction_company.repositories.CompanyRep;
 import prbd.construction_company.repositories.HouseRep;
-import prbd.construction_company.services.ApartmentFilter;
+import prbd.construction_company.services.ApartmentService;
+import prbd.construction_company.services.CompanyService;
+import prbd.construction_company.services.HouseService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Controller("/apartments")
 public class ApartmentController {
 
-    private final ApartmentRep apartmentRep;
-    private final HouseRep houseRep;
-    private final CompanyRep companyRep;
-    private final ApartmentFilter filter;
+    private final ApartmentService apartmentService;
+    private final HouseService houseService;
+    private final CompanyService companyService;
 
     @Autowired
-    public ApartmentController(ApartmentRep apartmentRep, HouseRep houseRep, CompanyRep companyRep, ApartmentFilter filter) {
-        this.apartmentRep = apartmentRep;
-        this.houseRep = houseRep;
-        this.companyRep = companyRep;
-        this.filter = filter;
+    public ApartmentController(ApartmentService apartmentService, HouseService houseService, CompanyService companyService) {
+        this.apartmentService = apartmentService;
+        this.houseService = houseService;
+        this.companyService = companyService;
     }
 
 
@@ -36,11 +36,11 @@ public class ApartmentController {
     public String houseApartments(Model model, @PathVariable String house_id) {
         try {
             Integer houseID = Integer.parseInt(house_id);
-            House house = houseRep.findById(houseID).get();
-            Iterable<Apartment> apartmentsFromHouse = house.getApartments();
+            House house = houseService.getHouseById(houseID);
+            Set<Apartment> apartmentsFromHouse = house.getApartments();
             model.addAttribute("apartments", apartmentsFromHouse);
             model.addAttribute("house", house);
-            return "apartments";
+            return allApartments(model);
         } catch (NumberFormatException | NoSuchElementException e) {
             return "redirect:/";
         }
@@ -48,26 +48,29 @@ public class ApartmentController {
 
     @GetMapping("/apartments")
     public String allApartments(Model model) {
-        List<Apartment> apartments = apartmentRep.findAll();
-        model.addAttribute("maxRooms", filter.maxRoomsCount());
-        model.addAttribute("minRooms", filter.minRoomsCount());
-        model.addAttribute("maxFloor", filter.maxFloor());
-        model.addAttribute("minFloor", filter.minFloor());
-        model.addAttribute("minPrice", filter.minPrice());
-        model.addAttribute("maxPrice", filter.maxPrice());
-        model.addAttribute("apartments", apartments);
-        model.addAttribute("houses", houseRep.findAll());
-        model.addAttribute("companies", companyRep.findAll());
+        model.addAttribute("maxRooms", apartmentService.maxRoomsCount());
+        model.addAttribute("minRooms", apartmentService.minRoomsCount());
+        model.addAttribute("maxFloor", apartmentService.maxFloor());
+        model.addAttribute("minFloor", apartmentService.minFloor());
+        model.addAttribute("minPrice", apartmentService.minPrice());
+        model.addAttribute("maxPrice", apartmentService.maxPrice());
+        model.addAttribute("apartments", apartmentService.allApartments());
+        model.addAttribute("houses", houseService.allHouses());
+        model.addAttribute("companies", companyService.allCompanies());
+        model.addAttribute("status", apartmentService.statusMap().values());
+
         return "apartments";
     }
 
-//    @GetMapping("/apartments/{company}/{house}")
-//    public String houseApartments(Model model,
-//                                  @PathVariable(required = false) String company,
-//                                  @PathVariable(required = false) String house) {
-//        Iterable<Apartment> apartments = apartmentRep.findAll();
-//        model.addAttribute("apartments", apartments);
-//        return "apartments";
-//    }
+    @RequestMapping("/apartments")
+    public List<Apartment> apartments() {
+        return null;
+    }
+
+    @PostMapping("/apartments")
+    public String findApartments() {
+
+        return "apartments";
+    }
 
 }

@@ -1,0 +1,12 @@
+
+.hidden {
+    display: none;
+}
+
+select.empty {
+    color: grey;
+}
+
+select option[disabled]:first-child {
+    display: none;
+}

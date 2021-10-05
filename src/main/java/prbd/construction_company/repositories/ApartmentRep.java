@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
 
+import java.util.List;
+
 public interface ApartmentRep extends JpaRepository<Apartment, Integer> {
     Iterable<Apartment> findAllByHouse(House house);
-    Iterable<Apartment> findAllByHouseIs(House house);
-
 }
