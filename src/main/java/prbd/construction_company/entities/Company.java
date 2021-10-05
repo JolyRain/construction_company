@@ -17,7 +17,7 @@ public class Company {
 
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
     private Set<House> houses;
 
     @Column(name = "logo")

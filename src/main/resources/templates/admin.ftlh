@@ -25,7 +25,7 @@
         <div class="tab-content p-3 align-content-lg-center">
             <div class="tab-pane fade" id="companies">
                 <div class="container-fluid w-25">
-                    <a class="btn btn-dark w-100" href="addUserForm.php">Добавить компанию</a>
+                    <a class="btn btn-dark w-100" href="/admin/company-new">Добавить компанию</a>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -40,18 +40,20 @@
                     </thead>
                     <tbody>
                     <#list companies as company>
-                    <tr>
-                        <td>${company.getId()}</td>
-                        <td>${company.getName()}</td>
-                        <td>${company.getDescription()}</td>
-                        <td><img src="${"lol"}" alt=""></td>
-                        <td>
-                            <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger btn-sm" href="/admin/delete/${company}">Удалить</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>${company.getId()}</td>
+                            <td>${company.getName()}</td>
+                            <td>${company.getDescription()}</td>
+                            <td><img src="${company.getLogo()}" width="50%" height="50%" alt=""></td>
+                            <td>
+                                <a class="btn bg-white border-dark btn-sm"
+                                   href="/admin/company-update/${company.getId()}">Изменить</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger btn-sm"
+                                   href="/admin/company-delete/${company.getId()}">Удалить</a>
+                            </td>
+                        </tr>
                     </#list>
                     </tbody>
                 </table>
@@ -60,42 +62,42 @@
                 <div class="container-fluid w-25">
                     <a class="btn btn-dark w-100" href="addUserForm.php">Добавить дом</a>
                 </div>
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Адрес</th>
+                        <th scope="col">Компания</th>
+                        <th scope="col">Начало строительства</th>
+                        <th scope="col">Завершение строительства</th>
+                        <th scope="col">Ввод в эксплуатацию</th>
+                        <th scope="col">Фото</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list houses as house>
                         <tr>
-                            <th scope="col">id</th>
-                            <th scope="col">Название</th>
-                            <th scope="col">Адрес</th>
-                            <th scope="col">Компания</th>
-                            <th scope="col">Начало строительства</th>
-                            <th scope="col">Завершение строительства</th>
-                            <th scope="col">Ввод в эксплуатацию</th>
-                            <th scope="col">Фото</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <td>${house.getId()}</td>
+                            <td>${house.getName()}</td>
+                            <td>${house.getAddress()}</td>
+                            <td>${house.getCompany().getName()}</td>
+                            <td>${house.getStartDate()}</td>
+                            <td>${house.getCompleteDate()}</td>
+                            <td>${house.getExploitDate()}</td>
+                            <td><img src="${house.getPhoto()}" width="100%" height="100%" alt=""></td>
+                            <td>
+                                <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" href="">Удалить</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <#list houses as house>
-                            <tr>
-                                <td>${house.getId()}</td>
-                                <td>${house.getName()}</td>
-                                <td>${house.getAddress()}</td>
-                                <td>${house.getCompany().getName()}</td>
-                                <td>${house.getStartDate()}</td>
-                                <td>${house.getCompleteDate()}</td>
-                                <td>${house.getExploitDate()}</td>
-                                <td><img src="${house.getPhoto()}" width="100%" height="100%" alt=""></td>
-                                <td>
-                                    <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" href="">Удалить</a>
-                                </td>
-                            </tr>
-                        </#list>
-                        </tbody>
-                    </table>
+                    </#list>
+                    </tbody>
+                </table>
             </div>
             <div class="tab-pane fade" id="apartments">
                 <div class="container-fluid w-25">
@@ -146,7 +148,7 @@
             </div>
             <div class="tab-pane fade" id="clients">
                 <div class="container-fluid w-25">
-                    <a class="btn btn-dark w-100" href="addProductForm.php">Добавить клиента</a>
+                    <a class="btn btn-dark w-100" href="/admin/client-new">Добавить клиента</a>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -165,10 +167,12 @@
                             <td>${client.getName()}</td>
                             <td>${client.getSurname()}</td>
                             <td>
-                                <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
+                                <a class="btn bg-white border-dark btn-sm"
+                                   href="/admin/client-update/${client.getId()}">Изменить</a>
                             </td>
                             <td>
-                                <a class="btn btn-danger btn-sm" href="">Удалить</a>
+                                <a class="btn btn-danger btn-sm"
+                                   href="/admin/client-delete/${client.getId()}">Удалить</a>
                             </td>
                         </tr>
                     </#list>
