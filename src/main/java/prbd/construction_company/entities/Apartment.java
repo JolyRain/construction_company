@@ -1,10 +1,14 @@
 package prbd.construction_company.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import prbd.construction_company.serialization.ApartmentSerializer;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "apartment")
+@JsonSerialize(using = ApartmentSerializer.class)
 public class Apartment {
 
     @Id

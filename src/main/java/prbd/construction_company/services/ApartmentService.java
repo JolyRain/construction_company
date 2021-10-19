@@ -7,12 +7,12 @@ import prbd.construction_company.entities.House;
 import prbd.construction_company.entities.SaleStatus;
 import prbd.construction_company.repositories.ApartmentRep;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalInt;
+import java.util.*;
+import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -32,9 +32,69 @@ public class ApartmentService {
         return apartmentRep.findById(id).orElse(null);
     }
 
-    public List<Apartment> allApartments() {
+    public Iterable<Apartment> allApartments() {
         return apartmentRep.findAll();
     }
+
+    public List<Apartment> apartmentList() {
+        return toList(allApartments());
+    }
+
+    public List<Apartment> getFilteredApartments(Integer company, Integer house, Integer roomsCount,
+                                                 String floorFrom, String floorTo,
+                                                 String priceFrom, String priceTo,
+                                                 String areaFrom, String areaTo,
+                                                 SaleStatus status) {
+        Predicate<Apartment> byAllParams =
+                apartment -> apartment.getHouse().getCompany().getId() == company && apartment.getHouse().getId() == house || all(company)
+                        && apartment.getRoomsCount() == roomsCount || all(company)
+                        && apartment.getFloorNumber() >= Integer.parseInt(floorFrom) && apartment.getFloorNumber() <= Integer.parseInt(floorTo)
+                        && apartment.getPrice() >= Integer.parseInt(priceFrom) && apartment.getPrice() <= Integer.parseInt(priceTo)
+                        && apartment.getTotalArea() >= Float.parseFloat(areaFrom) && apartment.getTotalArea() <= Float.parseFloat(areaTo)
+                        && apartment.getStatus().equals(status);
+        return filter(byAllParams);
+    }
+
+    private boolean all(Integer param) {
+        return param == -1;
+    }
+    private boolean all(String param) {
+        return all(Integer.parseInt(param)) || param.isBlank();
+    }
+
+    private List<Apartment> filter(Predicate<Apartment> predicate) {
+        List<Apartment> apartments = toList(allApartments());
+        return apartments.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    public List<Apartment> getByCompanyId(Integer companyId) {
+        return filter(apartment -> apartment.getHouse().getCompany().getId() == companyId);
+    }
+
+    public List<Apartment> getByHouseId(Integer houseId) {
+        return filter(apartment -> apartment.getHouse().getId() == houseId);
+    }
+
+    public List<Apartment> getByRoomsCount(Integer roomsCount) {
+        return filter(apartment -> apartment.getRoomsCount() == roomsCount);
+    }
+
+    public List<Apartment> getByFloor(Integer floorFrom, Integer floorTo) {
+        return filter(apartment -> apartment.getFloorNumber() >= floorFrom && apartment.getFloorNumber() <= floorTo);
+    }
+
+    public List<Apartment> getByPrice(Integer priceFrom, Integer priceTo) {
+        return filter(apartment -> apartment.getPrice() >= priceFrom && apartment.getPrice() <= priceTo);
+    }
+
+    public List<Apartment> getByArea(Float areaFrom, Float areaTo) {
+        return filter(apartment -> apartment.getTotalArea() >= areaFrom && apartment.getTotalArea() <= areaTo);
+    }
+
+    public List<Apartment> getByStatus(SaleStatus status) {
+        return filter(apartment -> apartment.getStatus().equals(status));
+    }
+
 
     public void deleteApartment(Apartment apartment) {
         apartmentRep.delete(apartment);
@@ -63,7 +123,9 @@ public class ApartmentService {
     }
 
     private Integer boundaryValues(ToIntFunction<Apartment> attribute, Function<IntStream, OptionalInt> function) {
-        IntStream stream = apartmentRep.findAll().stream().mapToInt(attribute);
+        List<Apartment> apartments = new ArrayList<>();
+        apartmentRep.findAll().forEach(apartments::add);
+        IntStream stream = apartments.stream().mapToInt(attribute);
         OptionalInt result = function.apply(stream);
         return result.isPresent() ? result.getAsInt() : -1;
     }
@@ -98,6 +160,12 @@ public class ApartmentService {
             map.put(s, s.getStatus());
         }
         return map;
+    }
+
+    private List<Apartment> toList(Iterable<Apartment> apartments) {
+        List<Apartment> result = new ArrayList<>();
+        apartments.forEach(result::add);
+        return result;
     }
 
 }

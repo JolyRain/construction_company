@@ -3,7 +3,9 @@ package prbd.construction_company.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import prbd.construction_company.entities.Client;
 import prbd.construction_company.entities.Company;
 import prbd.construction_company.services.ApartmentService;
@@ -11,8 +13,7 @@ import prbd.construction_company.services.ClientService;
 import prbd.construction_company.services.CompanyService;
 import prbd.construction_company.services.HouseService;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller("/admin")
 public class AdminController {
@@ -51,10 +52,17 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    //controllerAdvice | exceptionHandler
     @GetMapping("/admin/company-update/{id}")
-    public String updateCompanyForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("company", companyService.getCompanyById(id));
-        return "company-new";
+    public String updateCompanyForm(@PathVariable("id") String id, Model model) {
+        try {
+            Company company = companyService.getCompanyById(Integer.parseInt(id));
+            if (company == null) throw new NoSuchElementException();
+            model.addAttribute("company", company);
+            return "company-new";
+        } catch (NumberFormatException | NoSuchElementException e) {
+            return "redirect:/admin";
+        }
     }
 
     @PostMapping("/admin/company-update/{id}")
@@ -73,15 +81,23 @@ public class AdminController {
     public String newClientForm() {
         return "new-client";
     }
+
     @PostMapping("/admin/client-new")
     public String newClient(Client client) {
         clientService.addClient(client);
         return "redirect:/admin";
     }
+
     @GetMapping("/admin/client-update/{id}")
-    public String updateClientForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("client", clientService.getClientById(id));
-        return "new-client";
+    public String updateClientForm(@PathVariable("id") String id, Model model) {
+        try {
+            Client client = clientService.getClientById(Integer.parseInt(id));
+            if (client == null) throw new NoSuchElementException();
+            model.addAttribute("client", client);
+            return "new-client";
+        } catch (NumberFormatException | NoSuchElementException e) {
+            return "redirect:/admin";
+        }
     }
 
     @PostMapping("/admin/client-update/{id}")

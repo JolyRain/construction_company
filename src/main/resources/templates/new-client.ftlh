@@ -6,7 +6,12 @@
     <@h.header/>
     <div class="container w-50">
         <div class="container text-center w-75 mb-3">
-            <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1 ">Новый клиент</h6>
+            <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1 ">
+                <#if client??>
+                    Изменить данные клиента
+                <#else>
+                    Добавить клиента
+                </#if></h6>
         </div>
         <form class="w-100" method="post"
               action="<#if client??>/admin/client-update/${client.getId()} <#else> /admin/client-new</#if>">

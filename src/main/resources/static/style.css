@@ -10,3 +10,4 @@ select.empty {
 select option[disabled]:first-child {
     display: none;
 }
+

@@ -8,6 +8,7 @@ import prbd.construction_company.entities.House;
 
 import java.util.List;
 
-public interface ApartmentRep extends JpaRepository<Apartment, Integer> {
+public interface ApartmentRep extends CrudRepository<Apartment, Integer> {
     Iterable<Apartment> findAllByHouse(House house);
+
 }

@@ -6,14 +6,21 @@
     <@h.header/>
     <div class="container w-50">
         <div class="container text-center w-75 mb-3">
-            <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1 ">Новый дом</h6>
+            <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1 ">
+                <#if house??>
+                    Изменить данные дома
+                <#else>
+                    Добавить дом
+                </#if>
+            </h6>
+            <h6 class="text-danger">пока не работает</h6>
         </div>
         <form class="w-100" method="post"
               action="<#if house??>/admin/house-update/${house.getId()} <#else> /admin/house-new</#if>">
             <div class="form-group mb-3">
                 <label for="name" class="mb-1">Название</label>
                 <input type="text" class="form-control text-center" name="name" id="name"
-                       value="<#if company??>${company.getName()}</#if>">
+                       value="<#if house??>${house.getName()}</#if>">
             </div>
             <div class="form-group mb-3">
                 <label for="address" class="mb-1">Адрес</label>

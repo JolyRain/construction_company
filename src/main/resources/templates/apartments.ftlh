@@ -4,84 +4,40 @@
 
 <@base.page title="Квартиры">
     <@h.header />
-<#--    <#if house??>-->
-<#--        <div class="container my-5">-->
-<#--            <div class="row p-4 align-items-center rounded-3 border shadow">-->
-<#--                <div class="col-5 p-0 shadow">-->
-<#--                    <img class=""-->
-<#--                         src="${house.photo}" alt=""-->
-<#--                         width="100%" height="100%">-->
-<#--                </div>-->
-<#--                <div class="col-6 p-3">-->
-<#--                    <h1 class="display-6 fw-bold lh-1">${house.name}</h1>-->
-<#--                    <p class="lead">Адрес ${house.address}</p>-->
-<#--                    <p class="lead">Начало строительства ${house.startDate}</p>-->
-<#--                    <p class="lead">Завершение строительства ${house.completeDate}</p>-->
-<#--                    <p class="lead">Ввод в эксплуатацию ${house.exploitDate}</p>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </#if>-->
     <div class="px-4 my-5 text-center">
         <h1 class="display-5 fw-bold">Квартиры</h1>
     </div>
+
     <div class="container p-3">
-        <form class="row align-items-center" method="get" action="/apartments/filter">
-            <div class="col-auto">
+        <form class="row row-cols-6 align-items-center" method="post" action="/apartments/filter">
+            <div class="col-2">
                 <label for="company">Строительная компания</label>
                 <select class="form-control" name="company" id="company">
-                    <option value="all">Все</option>
+                    <option value="ALL">Все</option>
                     <#list companies as company>
-                        <option value="${company}">${company.getName()}</option>
+                        <option value="${company.id}">${company.getName()}</option>
                     </#list>
                 </select>
             </div>
-            <div class="col-auto">
-                <label for="houses">Дом</label>
-                <select class="form-control" name="house" id="houses">
-                    <option value="all">Все</option>
+            <div class="col-2">
+                <label for="house">Дом</label>
+                <select class="form-control" name="house" id="house">
+                    <option value="-1">Все</option>
                     <#list houses as house>
-                        <option value="${house}">${house.getName()}</option>
+                        <option value="${house.id}">${house.getName()}</option>
                     </#list>
                 </select>
             </div>
-            <div class="col-auto">
+            <div class="col-2">
                 <label for="roomsCount">Кол-во комнат</label>
                 <select class="form-control" name="roomsCount" id="roomsCount">
-                    <option>Все</option>
+                    <option value="ALL">Все</option>
                     <#list minRooms..maxRooms as roomsCount>
                         <option value="${roomsCount}">${roomsCount}</option>
                     </#list>
                 </select>
             </div>
-            <div class="col-auto">
-                <label for="floorFrom">Этаж</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control from" name="floorFrom" id="floorFrom"
-                           placeholder="от" oninput="filterInput(this)">
-                    <input type="text" class="form-control" name="floorTo" id="floorTo"
-                           placeholder="до" oninput="filterInput(this)">
-                </div>
-            </div>
-            <div class="col-auto">
-                <label for="priceFrom">Цена, руб</label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control" name="priceFrom" id="priceFrom"
-                           placeholder="от" oninput="filterInput(this)">
-                    <input type="text" class="form-control" name="priceTo" id="priceTo"
-                           placeholder="до" oninput="filterInput(this)">
-                </div>
-            </div>
-            <div class="col-auto">
-                <label for="areaFrom">Площадь, м<sup>2</sup></label>
-                <div class="d-inline-flex">
-                    <input type="text" class="form-control" name="areaFrom" id="areaFrom"
-                           placeholder="от" oninput="filterInput(this)">
-                    <input type="text" class="form-control" name="areaTo" id="areaTo"
-                           placeholder="до" oninput="filterInput(this)">
-                </div>
-            </div>
-            <div class="col-auto">
+            <div class="col-2">
                 <label for="status" class="">Статус продажи</label>
                 <select class="form-select" name="status" id="status">
                     <#list status as s>
@@ -89,35 +45,83 @@
                     </#list>
                 </select>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary m-2">Подобрать</button>
+            <div class="col-1">
+                <label for="drop"></label>
+                <button class="btn btn-primary" id="drop" onclick="clearForm()">Сбросить</button>
             </div>
+            <div class="col-2">
+                <label for="count"></label>
+                <p class="" id="count"></p>
+            </div>
+            <div class="col-3">
+                <div class="container row p-0 py-2">
+                    <div class="container d-inline-flex">
+                        <label for="floorFrom" class="float-start">Этаж: </label>
+                        <input type="number" class=" border-0 bg-white text-primary w-100" id="floorFrom" disabled>
+                        <label for="floorTo"></label>
+                        <input type="number" class="text-end border-0 bg-white text-primary w-100" id="floorTo" disabled>
+                    </div>
+                </div>
+                <div id="floor-range"></div>
+                <script>
+                    createSlider('#floor-range', '#floorFrom', '#floorTo', ${minFloor?int?c}, ${maxFloor?int?c})
+                </script>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+                <div class="container row p-0 py-2">
+                    <div class="container d-inline-flex">
+                        <label for="priceFrom" class="float-start">Цена,руб:</label>
+                        <input type="number" class="w-100 border-0 bg-white text-primary" id="priceFrom" disabled>
+                        <label class="" for="priceTo"></label>
+                        <input type="number" class="w-100 border-0 bg-white text-primary" id="priceTo" disabled>
+                    </div>
+                </div>
+                <div id="price-range"></div>
+                <script>
+                    createSlider('#price-range', '#priceFrom', '#priceTo', ${minPrice?int?c}, ${maxPrice?int?c})
+                </script>
+            </div>
+
         </form>
     </div>
     <div class="container">
-        <div class="row row-cols-2">
+        <div class="row row-cols-3" id="content">
             <#list apartments as apartment>
                 <div class="col">
-                    <div class="row my-2 mx-1 p-4 align-items-center rounded-3 border shadow">
-                        <div class="col-5 p-0 shadow">
+                    <div class="row my-2 mx-1 p-4 pb-0 align-items-center rounded-3 border border-3">
+                        <div class="container row row-cols-2 m-0 mb-2 shadow-sm p-0">
+                            <div class="col">
+                                <p id="address">${apartment.getHouse().getAddress()}</p>
+                            </div>
+                            <div class="col p-2">
+                                <img id="house_img" src="${apartment.getHouse().getPhoto()}" width="100%" height="100%"
+                                     alt="">
+                            </div>
+                        </div>
+                        <div class="col-5 p-0 shadow-sm">
                             <img class=""
                                  src="${apartment.layoutImg}" alt=""
-                                 width="100%" height="100%">
+                                 width="100%" height="100%" id="layout_img">
                         </div>
-                        <div class="col-7 p-3">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Подъезд ${apartment.entranceNumber}</li>
-                                <li class="list-group-item">Этаж ${apartment.floorNumber}</li>
-                                <li class="list-group-item">Кол-во комнат ${apartment.roomsCount}</li>
-                                <li class="list-group-item">Общая площадь ${apartment.totalArea} м<sup>2</sup></li>
-                                <li class="list-group-item">Жилая площадь ${apartment.livingArea} м<sup>2</sup></li>
-                                <li class="list-group-item">Цена ${apartment.price} руб.</li>
-                                <li class="list-group-item">Статус продажи ${apartment.status}</li>
-                            </ul>
+                        <div class="col-7">
+                            <p id="floor" class="m-0">Этаж &ndash; ${apartment.floorNumber}</p>
+                            <p id="roomsCount" class="m-0">Кол-во комнат &ndash; ${apartment.roomsCount}</p>
+                            <p id="totalArea" class="m-0">Общ.площадь &ndash; ${apartment.totalArea}
+                                м<sup>2</sup></p>
+                            <p id="livingArea" class="m-0">Жил.площадь &ndash; ${apartment.livingArea}
+                                м<sup>2</sup></p>
+                            <p id="price" class="m-0 fw-bold">Цена &ndash; ${apartment.price} руб.</p>
+                        </div>
+                        <div class="container m-1 p-0">
+                            <p id="status" class="m-0 mt-3 text-center">${apartment.status.getStatus()}</p>
                         </div>
                     </div>
                 </div>
             </#list>
         </div>
+        <script type="text/javascript">
+            $(document).ready(getApartments())
+        </script>
     </div>
 </@base.page>

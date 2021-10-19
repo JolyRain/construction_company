@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
-import prbd.construction_company.repositories.ApartmentRep;
-import prbd.construction_company.repositories.CompanyRep;
-import prbd.construction_company.repositories.HouseRep;
+import prbd.construction_company.entities.SaleStatus;
 import prbd.construction_company.services.ApartmentService;
 import prbd.construction_company.services.CompanyService;
 import prbd.construction_company.services.HouseService;
@@ -24,12 +22,24 @@ public class ApartmentController {
     private final HouseService houseService;
     private final CompanyService companyService;
 
+
     @Autowired
     public ApartmentController(ApartmentService apartmentService, HouseService houseService, CompanyService companyService) {
         this.apartmentService = apartmentService;
         this.houseService = houseService;
         this.companyService = companyService;
     }
+
+    @PostMapping("/apartments/filter")
+    public String filter(@RequestParam Integer company, @RequestParam Integer house, @RequestParam Integer roomsCount,
+                         @RequestParam String floorFrom, @RequestParam String floorTo,
+                         @RequestParam String priceFrom, @RequestParam String priceTo,
+                         @RequestParam String areaFrom, @RequestParam String areaTo,
+                         @RequestParam SaleStatus status, Model model) {
+        model.addAttribute("apartments", apartmentService.getFilteredApartments(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, areaFrom, areaTo, status));
+        return "apartments";
+    }
+
 
 
     @GetMapping("/apartments/{house_id}")

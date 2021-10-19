@@ -9,13 +9,13 @@ public class AdminService {
     private final ClientService clientService;
     private final CompanyService companyService;
 
-    public AdminService(ApartmentService apartmentService, HouseService houseService, ClientService clientService, CompanyService companyService) {
+    public AdminService(ApartmentService apartmentService, HouseService houseService,
+                        ClientService clientService, CompanyService companyService) {
         this.apartmentService = apartmentService;
         this.houseService = houseService;
         this.clientService = clientService;
         this.companyService = companyService;
     }
-
 
     public ApartmentService getApartmentService() {
         return apartmentService;

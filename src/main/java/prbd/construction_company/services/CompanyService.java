@@ -6,8 +6,7 @@ import prbd.construction_company.entities.Company;
 import prbd.construction_company.entities.House;
 import prbd.construction_company.repositories.CompanyRep;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CompanyService {
@@ -23,6 +22,8 @@ public class CompanyService {
     }
 
     public Iterable<Company> allCompanies() {
+        List<Company> companies = (List<Company>) companyRep.findAll();
+        companies.sort(Comparator.comparingInt(Company::getId));
         return companyRep.findAll();
     }
 
