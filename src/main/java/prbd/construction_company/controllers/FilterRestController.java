@@ -36,4 +36,5 @@ public class FilterRestController {
         return apartmentService.apartmentList();
     }
 
+
 }

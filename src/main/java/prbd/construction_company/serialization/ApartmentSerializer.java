@@ -26,6 +26,9 @@ public class ApartmentSerializer extends JsonSerializer<Apartment> {
         jsonGenerator.writeNumberField("price", apartment.getPrice());
         jsonGenerator.writeStringField("status", apartment.getStatus().getStatus());
         jsonGenerator.writeStringField("layout_img", apartment.getLayoutImg());
+        jsonGenerator.writeStringField("house_photo", apartment.getHouse().getPhoto());
+        jsonGenerator.writeStringField("address", apartment.getHouse().getAddress());
+
         jsonGenerator.writeEndObject();
 
     }

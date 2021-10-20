@@ -125,7 +125,7 @@
                     <#list apartments as apartment>
                         <tr>
                             <td>${apartment.getId()}</td>
-                            <td>${""}</td>
+                            <td><img src="${apartment.getLayoutImg()}" width="100%" height="100%"></td>
                             <td>${apartment.getHouse().getName()}</td>
                             <td>${apartment.getEntranceNumber()}</td>
                             <td>${apartment.getFloorNumber()}</td>
