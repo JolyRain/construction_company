@@ -11,9 +11,8 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 public class ConstructionCompanyApplication {
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) {
         SpringApplication.run(ConstructionCompanyApplication.class, args);
-        log.info("ip: {}", InetAddress.getLocalHost());
     }
 
 }

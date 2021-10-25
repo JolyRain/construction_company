@@ -1,52 +1,62 @@
 package prbd.construction_company.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import prbd.construction_company.dto.CompanyDto;
+import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.entities.Company;
 import prbd.construction_company.entities.House;
+import prbd.construction_company.mapper.CompanyMapper;
 import prbd.construction_company.repositories.CompanyRep;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class CompanyService {
 
     private final CompanyRep companyRep;
+    private final CompanyMapper companyMapper;
 
-    public void addCompany(Company company) {
-        companyRep.save(company);
+    public CompanyDto addCompany(CompanyDto companyDto) {
+        companyRep.save(companyMapper.toEntity(companyDto));
+        return companyDto;
     }
 
-    public Iterable<Company> allCompanies() {
-        return companyRep.findAll(Sort.by(Sort.Order.by("name")).ascending());
+    public List<CompanyDto> allCompanies() {
+        var companyDtoList = new ArrayList<CompanyDto>();
+//        companyRep.findAll().forEach(company -> companyDtoList.add(companyMapper.toDto(company)));
+        var all = companyRep.findAll();
+        return companyDtoList;
     }
 
-    public Company getCompanyById(Integer id) {
-        Optional<Company> company = companyRep.findById(id);
-        return company.orElse(null);
+    public CompanyDto getCompanyById(Integer id) {
+        return companyMapper.toDto(companyRep.findById(id).orElse(null));
     }
 
     public void updateCompany(Integer id, String newName, String newDescription, String newLogo) {
-        Company company = getCompanyById(id);
-        company.setName(newName);
-        company.setDescription(newDescription);
-        company.setLogo(newLogo);
-        addCompany(company);
+        var companyDto = getCompanyById(id);
+        companyDto.setName(newName);
+        companyDto.setDescription(newDescription);
+        companyDto.setLogo(newLogo);
+        addCompany(companyDto);
     }
 
     //надо обработать исключения
-    public void deleteCompany(Company company) {
-        companyRep.delete(company);
+    public CompanyDto deleteCompany(CompanyDto companyDto) {
+        companyRep.delete(companyMapper.toEntity(companyDto));
+        return companyDto;
     }
 
-    public void deleteCompany(Integer id) {
-        companyRep.deleteById(id);
+    public CompanyDto deleteCompany(Integer id) {
+        var companyDto = getCompanyById(id);
+        deleteCompany(companyDto);
+        return companyDto;
     }
 
-    public Set<House> allHousesById(Integer id) {
+    public Set<HouseDto> allHousesById(Integer id) {
         return getCompanyById(id).getHouses();
     }
 

@@ -1,38 +1,46 @@
 package prbd.construction_company.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.entities.Client;
+import prbd.construction_company.mapper.ClientMapper;
 import prbd.construction_company.repositories.ClientRep;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
 @Service
 public class ClientService {
 
     private final ClientRep clientRep;
+    private final ClientMapper clientMapper;
 
-    @Autowired
-    public ClientService(ClientRep clientRep) {
-        this.clientRep = clientRep;
+    public List<ClientDto> allClients() {
+        var clientDtoList = new ArrayList<ClientDto>();
+        clientRep.findAll().forEach(client -> clientDtoList.add(clientMapper.toDto(client)));
+        return clientDtoList;
     }
 
-    public Iterable<Client> allClients() {
-        return clientRep.findAll();
+    public ClientDto getClientById(Integer id) {
+        return clientMapper.toDto(clientRep.findById(id).orElse(null));
     }
 
-    public Client getClientById(Integer id) {
-        return clientRep.findById(id).orElse(null);
+    public ClientDto addClient(ClientDto clientDto) {
+        clientRep.save(clientMapper.toEntity(clientDto));
+        return clientDto;
     }
 
-    public void addClient(Client client) {
-        clientRep.save(client);
+    public ClientDto deleteClient(ClientDto clientDto) {
+        clientRep.delete(clientMapper.toEntity(clientDto));
+        return clientDto;
     }
 
-    public void deleteClient(Integer id) {
-        clientRep.deleteById(id);
-    }
-
-    public void deleteClient(Client client) {
-        clientRep.delete(client);
+    public ClientDto deleteClient(Integer id) {
+        var clientDto = getClientById(id);
+        deleteClient(clientDto);
+        return clientDto;
     }
 
 

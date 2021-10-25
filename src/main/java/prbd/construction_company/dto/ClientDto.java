@@ -1,15 +1,14 @@
 package prbd.construction_company.dto;
 
+
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
-public class CompanyDto {
-
+public class ClientDto {
     private int id;
     private String name;
-    private String description;
-    private Set<HouseDto> houses;
-    private String logo;
+    private String surname;
+    private Set<ApartmentDto> apartments;
 }

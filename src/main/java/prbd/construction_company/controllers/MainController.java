@@ -1,20 +1,16 @@
 package prbd.construction_company.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import prbd.construction_company.services.CompanyService;
 
+@RequiredArgsConstructor
 @Controller("/")
 public class MainController {
 
     private final CompanyService companyService;
-
-    @Autowired
-    public MainController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
 
     @GetMapping
     public String main(Model model) {

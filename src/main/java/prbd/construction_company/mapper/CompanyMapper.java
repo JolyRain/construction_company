@@ -7,7 +7,7 @@ import prbd.construction_company.entities.Company;
 @Mapper
 public interface CompanyMapper {
 
-
     CompanyDto toDto(Company entity);
+
     Company toEntity(CompanyDto dto);
 }

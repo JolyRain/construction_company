@@ -10,8 +10,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "apartment")
 @JsonSerialize(using = ApartmentSerializer.class)
@@ -24,7 +22,7 @@ public class Apartment {
 
     private int number;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house", nullable = false)
     private House house;
 

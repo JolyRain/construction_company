@@ -1,5 +1,6 @@
 package prbd.construction_company.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import prbd.construction_company.dto.ApartmentDto;
+import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
 import prbd.construction_company.services.ApartmentService;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/apartments")
 public class ApartmentController {
@@ -25,22 +29,14 @@ public class ApartmentController {
     private final HouseService houseService;
     private final CompanyService companyService;
 
-
-    @Autowired
-    public ApartmentController(ApartmentService apartmentService, HouseService houseService, CompanyService companyService) {
-        this.apartmentService = apartmentService;
-        this.houseService = houseService;
-        this.companyService = companyService;
-    }
-
     @GetMapping("{house_id}")
     public String houseApartments(Model model, @PathVariable String house_id) {
         try {
-            Integer houseID = Integer.parseInt(house_id);
-            House house = houseService.getHouseById(houseID);
-            Set<Apartment> apartmentsFromHouse = house.getApartments();
+            var houseID = Integer.parseInt(house_id);
+            var houseDto = houseService.getHouseById(houseID);
+            var apartmentsFromHouse = houseDto.getApartments();
             model.addAttribute("apartments", apartmentsFromHouse);
-            model.addAttribute("house", house);
+            model.addAttribute("house", houseDto);
             return allApartments(model);
         } catch (NumberFormatException | NoSuchElementException e) {
             return "redirect:/";
