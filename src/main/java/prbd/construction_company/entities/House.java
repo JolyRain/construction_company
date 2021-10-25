@@ -1,12 +1,14 @@
 package prbd.construction_company.entities;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "house")
 public class House {
@@ -40,4 +42,5 @@ public class House {
 
     @Column(name = "photo")
     private String photo;
+
 }

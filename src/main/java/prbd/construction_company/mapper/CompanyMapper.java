@@ -7,6 +7,7 @@ import prbd.construction_company.entities.Company;
 
 @Mapper
 public interface CompanyMapper {
+    CycleAvoidingMappingContext CONTEXT = new CycleAvoidingMappingContext();
 
     CompanyDto toDto(Company entity, @Context CycleAvoidingMappingContext context);
 

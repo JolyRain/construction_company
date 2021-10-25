@@ -1,11 +1,16 @@
 package prbd.construction_company.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import prbd.construction_company.entities.SaleStatus;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ApartmentDto {
     private int id;
     private int number;
@@ -19,5 +24,4 @@ public class ApartmentDto {
     private SaleStatus status;
     private Set<ClientDto> owners;
     private String layoutImg;
-
 }

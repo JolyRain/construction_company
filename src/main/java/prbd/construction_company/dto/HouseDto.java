@@ -1,12 +1,15 @@
 package prbd.construction_company.dto;
 
-import lombok.Data;
-import prbd.construction_company.entities.Apartment;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class HouseDto {
     private int id;
     private CompanyDto company;
@@ -17,5 +20,4 @@ public class HouseDto {
     private LocalDate exploitDate;
     private Set<ApartmentDto> apartments;
     private String photo;
-
 }

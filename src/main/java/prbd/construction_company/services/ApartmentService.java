@@ -22,22 +22,22 @@ public class ApartmentService {
 
 
     public ApartmentDto addApartment(ApartmentDto apartmentDto) {
-        apartmentRep.save(apartmentMapper.toEntity(apartmentDto));
+        apartmentRep.save(apartmentMapper.toEntity(apartmentDto, ApartmentMapper.CONTEXT));
         return apartmentDto;
     }
 
     public ApartmentDto getApartmentById(Integer id) {
-        return apartmentMapper.toDto(apartmentRep.findById(id).orElse(null));
+        return apartmentMapper.toDto(apartmentRep.findById(id).orElse(null), ApartmentMapper.CONTEXT);
     }
 
     public List<ApartmentDto> allApartments() {
         var apartmentDtoList = new ArrayList<ApartmentDto>();
-        apartmentRep.findAll().forEach(apartment -> apartmentDtoList.add(apartmentMapper.toDto(apartment)));
+        apartmentRep.findAll().forEach(apartment -> apartmentDtoList.add(apartmentMapper.toDto(apartment, ApartmentMapper.CONTEXT)));
         return apartmentDtoList;
     }
 
     public ApartmentDto deleteApartment(ApartmentDto apartmentDto) {
-        apartmentRep.delete(apartmentMapper.toEntity(apartmentDto));
+        apartmentRep.delete(apartmentMapper.toEntity(apartmentDto, ApartmentMapper.CONTEXT));
         return apartmentDto;
     }
 

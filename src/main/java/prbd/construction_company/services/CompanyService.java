@@ -24,18 +24,18 @@ public class CompanyService {
     private final CycleAvoidingMappingContext context;
 
     public CompanyDto addCompany(CompanyDto companyDto) {
-        companyRep.save(companyMapper.toEntity(companyDto, context));
+        companyRep.save(companyMapper.toEntity(companyDto, CompanyMapper.CONTEXT));
         return companyDto;
     }
 
     public List<CompanyDto> allCompanies() {
         var companyDtoList = new ArrayList<CompanyDto>();
-        companyRep.findAll().forEach(company -> companyDtoList.add(companyMapper.toDto(company, context)));
+        companyRep.findAll().forEach(company -> companyDtoList.add(companyMapper.toDto(company, CompanyMapper.CONTEXT)));
         return companyDtoList;
     }
 
     public CompanyDto getCompanyById(Integer id) {
-        return companyMapper.toDto(companyRep.findById(id).orElse(null), context);
+        return companyMapper.toDto(companyRep.findById(id).orElse(null), CompanyMapper.CONTEXT);
     }
 
     public void updateCompany(Integer id, String newName, String newDescription, String newLogo) {
@@ -48,7 +48,7 @@ public class CompanyService {
 
     //надо обработать исключения
     public CompanyDto deleteCompany(CompanyDto companyDto) {
-        companyRep.delete(companyMapper.toEntity(companyDto, context));
+        companyRep.delete(companyMapper.toEntity(companyDto, CompanyMapper.CONTEXT));
         return companyDto;
     }
 

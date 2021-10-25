@@ -3,7 +3,6 @@ package prbd.construction_company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.House;
 import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repositories.HouseRep;
 
@@ -18,16 +17,16 @@ public class HouseService {
 
     public List<HouseDto> allHouses() {
         var houseDtoList = new ArrayList<HouseDto>();
-        houseRep.findAll().forEach(house -> houseDtoList.add(houseMapper.toDto(house)));
+        houseRep.findAll().forEach(house -> houseDtoList.add(houseMapper.toDto(house, HouseMapper.CONTEXT)));
         return houseDtoList;
     }
 
     public HouseDto addHouse(HouseDto houseDto) {
-        houseRep.save(houseMapper.toEntity(houseDto));
+        houseRep.save(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
         return houseDto;
     }
 
     public HouseDto getHouseById(Integer id) {
-        return houseMapper.toDto(houseRep.findById(id).orElse(null));
+        return houseMapper.toDto(houseRep.findById(id).orElse(null), HouseMapper.CONTEXT);
     }
 }

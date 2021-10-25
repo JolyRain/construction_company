@@ -1,15 +1,18 @@
 package prbd.construction_company.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import prbd.construction_company.serialization.ApartmentSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "apartment")
 @JsonSerialize(using = ApartmentSerializer.class)

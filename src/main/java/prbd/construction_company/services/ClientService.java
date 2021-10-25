@@ -19,21 +19,21 @@ public class ClientService {
 
     public List<ClientDto> allClients() {
         var clientDtoList = new ArrayList<ClientDto>();
-        clientRep.findAll().forEach(client -> clientDtoList.add(clientMapper.toDto(client)));
+        clientRep.findAll().forEach(client -> clientDtoList.add(clientMapper.toDto(client, ClientMapper.CONTEXT)));
         return clientDtoList;
     }
 
     public ClientDto getClientById(Integer id) {
-        return clientMapper.toDto(clientRep.findById(id).orElse(null));
+        return clientMapper.toDto(clientRep.findById(id).orElse(null), ClientMapper.CONTEXT);
     }
 
     public ClientDto addClient(ClientDto clientDto) {
-        clientRep.save(clientMapper.toEntity(clientDto));
+        clientRep.save(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
         return clientDto;
     }
 
     public ClientDto deleteClient(ClientDto clientDto) {
-        clientRep.delete(clientMapper.toEntity(clientDto));
+        clientRep.delete(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
         return clientDto;
     }
 

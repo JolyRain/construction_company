@@ -34,8 +34,8 @@ public class AdminController {
     public String admin(Model model) {
         model.addAttribute("companies", companyService.allCompanies());
         model.addAttribute("houses", houseService.allHouses());
-        model.addAttribute("clients", clientService.allClients());
         model.addAttribute("apartments", apartmentService.allApartments());
+        model.addAttribute("clients", clientService.allClients());
         return "admin";
     }
 
