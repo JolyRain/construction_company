@@ -17,7 +17,7 @@ public class Company {
 
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     private Set<House> houses;
 
     @Column(name = "logo")

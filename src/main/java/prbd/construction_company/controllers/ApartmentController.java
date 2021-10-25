@@ -3,10 +3,12 @@ package prbd.construction_company.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.House;
-import prbd.construction_company.entities.SaleStatus;
 import prbd.construction_company.services.ApartmentService;
 import prbd.construction_company.services.CompanyService;
 import prbd.construction_company.services.HouseService;
@@ -15,7 +17,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-@Controller("/apartments")
+@Controller
+@RequestMapping("/apartments")
 public class ApartmentController {
 
     private final ApartmentService apartmentService;
@@ -30,19 +33,7 @@ public class ApartmentController {
         this.companyService = companyService;
     }
 
-    @PostMapping("/apartments/filter")
-    public String filter(@RequestParam Integer company, @RequestParam Integer house, @RequestParam Integer roomsCount,
-                         @RequestParam String floorFrom, @RequestParam String floorTo,
-                         @RequestParam String priceFrom, @RequestParam String priceTo,
-                         @RequestParam String areaFrom, @RequestParam String areaTo,
-                         @RequestParam SaleStatus status, Model model) {
-        model.addAttribute("apartments", apartmentService.getFilteredApartments(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, areaFrom, areaTo, status));
-        return "apartments";
-    }
-
-
-
-    @GetMapping("/apartments/{house_id}")
+    @GetMapping("{house_id}")
     public String houseApartments(Model model, @PathVariable String house_id) {
         try {
             Integer houseID = Integer.parseInt(house_id);
@@ -56,7 +47,7 @@ public class ApartmentController {
         }
     }
 
-    @GetMapping("/apartments")
+    @GetMapping
     public String allApartments(Model model) {
         model.addAttribute("maxRooms", apartmentService.maxRoomsCount());
         model.addAttribute("minRooms", apartmentService.minRoomsCount());
@@ -72,15 +63,5 @@ public class ApartmentController {
         return "apartments";
     }
 
-    @RequestMapping("/apartments")
-    public List<Apartment> apartments() {
-        return null;
-    }
-
-    @PostMapping("/apartments")
-    public String findApartments() {
-
-        return "apartments";
-    }
 
 }

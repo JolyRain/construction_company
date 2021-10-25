@@ -11,3 +11,13 @@ select option[disabled]:first-child {
     display: none;
 }
 
+.sort-arrow {
+
+}
+
+.scale {
+    transition: 1s; /* Время эффекта */
+}
+.scale:hover {
+    transform: scale(4); /* Увеличиваем масштаб */
+}

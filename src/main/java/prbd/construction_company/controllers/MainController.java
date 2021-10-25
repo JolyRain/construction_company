@@ -16,7 +16,7 @@ public class MainController {
         this.companyService = companyService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String main(Model model) {
         model.addAttribute("title", "Главная");
         model.addAttribute("companies", companyService.allCompanies());

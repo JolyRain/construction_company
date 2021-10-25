@@ -1,6 +1,8 @@
 package prbd.construction_company.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.entities.Company;
 import prbd.construction_company.entities.House;
@@ -8,23 +10,18 @@ import prbd.construction_company.repositories.CompanyRep;
 
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class CompanyService {
-    private final CompanyRep companyRep;
 
-    @Autowired
-    public CompanyService(CompanyRep companyRep) {
-        this.companyRep = companyRep;
-    }
+    private final CompanyRep companyRep;
 
     public void addCompany(Company company) {
         companyRep.save(company);
     }
 
     public Iterable<Company> allCompanies() {
-        List<Company> companies = (List<Company>) companyRep.findAll();
-        companies.sort(Comparator.comparingInt(Company::getId));
-        return companyRep.findAll();
+        return companyRep.findAll(Sort.by(Sort.Order.by("name")).ascending());
     }
 
     public Company getCompanyById(Integer id) {

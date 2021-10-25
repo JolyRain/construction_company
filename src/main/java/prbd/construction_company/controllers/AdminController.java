@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.Client;
 import prbd.construction_company.entities.Company;
 import prbd.construction_company.services.ApartmentService;
@@ -41,6 +44,7 @@ public class AdminController {
         return "admin";
     }
 
+    //===============crud company===============//
     @GetMapping("/admin/company-new")
     public String createCompanyForm() {
         return "company-new";
@@ -66,7 +70,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/company-update/{id}")
-    public String updateCompany(Company company) {
+    public String updateCompany(Company company, @RequestParam MultipartFile image) {
         companyService.addCompany(company);
         return "redirect:/admin";
     }
@@ -77,8 +81,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    //===============crud client===============//
     @GetMapping("/admin/client-new")
-    public String newClientForm() {
+    public String newClientForm(Model model) {
+        model.addAttribute("apartments", apartmentService.allApartments());
         return "new-client";
     }
 
@@ -94,6 +100,7 @@ public class AdminController {
             Client client = clientService.getClientById(Integer.parseInt(id));
             if (client == null) throw new NoSuchElementException();
             model.addAttribute("client", client);
+            model.addAttribute("apartments", apartmentService.allApartments());
             return "new-client";
         } catch (NumberFormatException | NoSuchElementException e) {
             return "redirect:/admin";
@@ -109,6 +116,45 @@ public class AdminController {
     @GetMapping("/admin/client-delete/{id}")
     public String deleteClient(@PathVariable("id") Integer id) {
         clientService.deleteClient(id);
+        return "redirect:/admin";
+    }
+
+    //===============crud apartments===============//
+
+    @GetMapping("/admin/apartment-new")
+    public String newApartmentForm(Model model) {
+        model.addAttribute("clients", clientService.allClients());
+        return "apart-new";
+    }
+
+    @PostMapping("/admin/apartment-new")
+    public String newApartment(Apartment apartment) {
+        apartmentService.addApartment(apartment);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/apartment-update/{id}")
+    public String updateApartmentForm(@PathVariable("id") String id, Model model) {
+        try {
+            Apartment apartment = apartmentService.getApartmentById(Integer.parseInt(id));
+            if (apartment == null) throw new NoSuchElementException();
+            model.addAttribute("apartment", apartment);
+            model.addAttribute("apartments", apartmentService.allApartments());
+            return "apart-new";
+        } catch (NumberFormatException | NoSuchElementException e) {
+            return "redirect:/admin";
+        }
+    }
+
+    @PostMapping("/admin/apartment-update/{id}")
+    public String updateApartment(Apartment apartment) {
+        apartmentService.addApartment(apartment);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/admin/apartment-delete/{id}")
+    public String deleteApartment(@PathVariable("id") Integer id) {
+        apartmentService.deleteApartment(id);
         return "redirect:/admin";
     }
 }

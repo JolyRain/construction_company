@@ -101,7 +101,7 @@
             </div>
             <div class="tab-pane fade" id="apartments">
                 <div class="container-fluid w-25">
-                    <a class="btn btn-dark w-100" href="addProductForm.php">Добавить хату</a>
+                    <a class="btn btn-dark w-100" href="">Добавить хату</a>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead-dark">

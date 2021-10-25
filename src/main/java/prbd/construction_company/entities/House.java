@@ -32,7 +32,7 @@ public class House {
     @Column(name = "exploit_date", columnDefinition = "DATE")
     private LocalDate exploitDate;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "house")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "house")
     private Set<Apartment> apartments;
 
     @Column(name = "photo")

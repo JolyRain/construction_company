@@ -36,7 +36,8 @@
             </#list>
             <div class="col-4"></div>
             <div class="col-4">
-                <button class="btn mt-3 btn-lg w-100 ${(client??)?then('btn-success','btn-primary')}" type="submit" id="send-client">
+                <button class="btn mt-3 btn-lg w-100 ${(client??)?then('btn-success','btn-primary')}" type="submit"
+                        id="send-client">
                     <#if client??>
                         Изменить
                     <#else>

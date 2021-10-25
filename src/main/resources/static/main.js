@@ -98,17 +98,16 @@ function print(aparts) {
             '                                     alt="">\n' +
             '                            </div>\n' +
             '                        </div>\n' +
-            '                        <div class="col-5 p-0 shadow-sm">\n' +
-            '                            <img class=""\n' +
+            '                        <div class="col-4 p-0 shadow-sm">\n' +
+            '                            <img class="scale"\n' +
             '                                 src="' + escapeHtml(apart.layout_img) + '" alt=""\n' +
             '                                 width="100%" height="100%" id="layout_img">\n' +
             '                        </div>\n' +
-            '                        <div class="col-7">\n' +
+            '                        <div class="col-8">\n ' +
             '                            <p id="floor" class="m-0">Этаж &ndash; ' + escapeHtml(apart.floor) + '</p>\n' +
+            '                            <p id="number" class="m-0">№ квартиры &ndash; ' + escapeHtml(apart.number) + '</p>\n' +
             '                            <p id="roomsCount" class="m-0">Кол-во комнат &ndash; ' + escapeHtml(apart.rooms_count) + '</p>\n' +
-            '                            <p id="totalArea" class="m-0">Общ.площадь &ndash; ' + escapeHtml(apart.total_area) + '\n' +
-            '                                м<sup>2</sup></p>\n' +
-            '                            <p id="livingArea" class="m-0">Жил.площадь &ndash; ' + escapeHtml(apart.living_area) + '\n' +
+            '                            <p id="totalArea" class="m-0" title="общая/жилая">Площадь &ndash; ' + escapeHtml(apart.total_area) + '/' + escapeHtml(apart.living_area) + '\n' +
             '                                м<sup>2</sup></p>\n' +
             '                            <p id="price" class="m-0 fw-bold">Цена &ndash; ' + escapeHtml(formatNumber(apart.price)) + ' руб.</p>\n' +
             '                        </div>\n' +
@@ -233,6 +232,7 @@ function shitSlider(ui, sliderId) {
             break
     }
 }
+
 
 
 
