@@ -1,5 +1,6 @@
 package prbd.construction_company.mapper;
 
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.entities.Company;
@@ -7,7 +8,7 @@ import prbd.construction_company.entities.Company;
 @Mapper
 public interface CompanyMapper {
 
-    CompanyDto toDto(Company entity);
+    CompanyDto toDto(Company entity, @Context CycleAvoidingMappingContext context);
 
-    Company toEntity(CompanyDto dto);
+    Company toEntity(CompanyDto dto, @Context CycleAvoidingMappingContext context);
 }
