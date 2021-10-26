@@ -7,7 +7,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "constr_company")
 public class Company {

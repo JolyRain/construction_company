@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ApartmentDto {
     private int id;
     private int number;

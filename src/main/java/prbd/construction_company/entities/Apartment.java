@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "apartment")
 @JsonSerialize(using = ApartmentSerializer.class)

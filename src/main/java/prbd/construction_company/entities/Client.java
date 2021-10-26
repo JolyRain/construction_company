@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "client")
 public class Client {

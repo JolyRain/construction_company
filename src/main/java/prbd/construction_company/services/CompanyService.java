@@ -21,7 +21,6 @@ public class CompanyService {
 
     private final CompanyRep companyRep;
     private final CompanyMapper companyMapper;
-    private final CycleAvoidingMappingContext context;
 
     public CompanyDto addCompany(CompanyDto companyDto) {
         companyRep.save(companyMapper.toEntity(companyDto, CompanyMapper.CONTEXT));
@@ -60,6 +59,10 @@ public class CompanyService {
 
     public Set<HouseDto> allHousesById(Integer id) {
         return getCompanyById(id).getHouses();
+    }
+
+    public int getHouseCount(CompanyDto companyDto) {
+        return companyDto.getHouses().size();
     }
 
 }

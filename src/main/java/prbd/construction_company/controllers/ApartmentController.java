@@ -1,24 +1,16 @@
 package prbd.construction_company.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import prbd.construction_company.dto.ApartmentDto;
-import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.Apartment;
-import prbd.construction_company.entities.House;
 import prbd.construction_company.services.ApartmentService;
 import prbd.construction_company.services.CompanyService;
 import prbd.construction_company.services.HouseService;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Controller

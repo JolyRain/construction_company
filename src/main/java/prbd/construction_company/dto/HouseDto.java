@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class HouseDto {
     private int id;
     private CompanyDto company;

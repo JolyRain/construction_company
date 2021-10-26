@@ -8,7 +8,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "house")
 public class House {

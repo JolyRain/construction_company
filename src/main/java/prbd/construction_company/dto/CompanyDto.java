@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class CompanyDto {
 
     private int id;
