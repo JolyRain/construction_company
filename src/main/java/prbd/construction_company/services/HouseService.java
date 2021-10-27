@@ -3,6 +3,7 @@ package prbd.construction_company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.HouseDto;
+import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repositories.HouseRep;
 
@@ -28,7 +29,7 @@ public class HouseService {
     }
 
     public HouseDto getHouseById(Integer id) {
-        // todo обработать исключения
-        return houseMapper.toDto(houseRep.findById(id).orElse(null), HouseMapper.CONTEXT);
+        return houseMapper.toDto(houseRep.findById(id)
+                .orElseThrow(() -> new NotFoundException("House not found!")), HouseMapper.CONTEXT);
     }
 }

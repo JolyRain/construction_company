@@ -3,6 +3,7 @@ package prbd.construction_company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.CompanyDto;
+import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.CompanyMapper;
 import prbd.construction_company.repositories.CompanyRep;
 
@@ -29,8 +30,8 @@ public class CompanyService {
     }
 
     public CompanyDto getCompanyById(Integer id) {
-        //todo обработать исключения
-        return companyMapper.toDto(companyRep.findById(id).orElse(null), CompanyMapper.CONTEXT);
+        return companyMapper.toDto(companyRep.findById(id)
+                .orElseThrow(() -> new NotFoundException("Company not found!")), CompanyMapper.CONTEXT);
     }
 
     public void deleteCompany(CompanyDto companyDto) {

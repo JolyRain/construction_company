@@ -2,7 +2,10 @@ package prbd.construction_company.exception;
 
 public class NotFoundException extends RuntimeException {
 
+    private static final String DEFAULT_MESSAGE = "Error! Not found :(";
+
     public NotFoundException() {
+        super(DEFAULT_MESSAGE);
     }
 
     public NotFoundException(String message) {

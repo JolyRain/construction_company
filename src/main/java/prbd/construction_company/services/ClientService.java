@@ -3,6 +3,7 @@ package prbd.construction_company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.ClientDto;
+import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ClientMapper;
 import prbd.construction_company.repositories.ClientRep;
 
@@ -24,8 +25,8 @@ public class ClientService {
     }
 
     public ClientDto getClientById(Integer id) {
-        // todo обработать исключения
-        return clientMapper.toDto(clientRep.findById(id).orElse(null), ClientMapper.CONTEXT);
+        return clientMapper.toDto(clientRep.findById(id)
+                .orElseThrow(() -> new NotFoundException("Client not found!")), ClientMapper.CONTEXT);
     }
 
     public ClientDto addClient(ClientDto clientDto) {

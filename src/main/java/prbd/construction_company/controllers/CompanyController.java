@@ -18,7 +18,7 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @GetMapping("{id}")
-    public String company(@PathVariable Integer id, Model model) {
+    public String getCompanyPage(@PathVariable Integer id, Model model) {
         try {
             var companyDto = companyService.getCompanyById(id);
             model.addAttribute("company", companyDto);
@@ -26,7 +26,7 @@ public class CompanyController {
             model.addAttribute("title", "Компания " + companyDto.getName());
             return "company";
         } catch (NumberFormatException | NoSuchElementException e) {
-            return "redirect:fckn-slave";
+            return "redirect:error";
         }
     }
 }

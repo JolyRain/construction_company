@@ -24,8 +24,8 @@ public class ApartmentService {
     }
 
     public ApartmentDto getApartmentById(Integer id) {
-        return apartmentMapper
-                .toDto(apartmentRep.findById(id).orElseThrow(NotFoundException::new), ApartmentMapper.CONTEXT);
+        return apartmentMapper.toDto(apartmentRep.findById(id)
+                        .orElseThrow(() -> new NotFoundException("Apartment not found!")), ApartmentMapper.CONTEXT);
     }
 
     public List<ApartmentDto> allApartments() {
