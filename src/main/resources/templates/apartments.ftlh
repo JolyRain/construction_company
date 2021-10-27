@@ -41,8 +41,8 @@
                 <label for="status" class="">Статус продажи</label>
                 <select class="form-select" name="status" id="status">
                     <option value="ALL">Все</option>
-                    <#list status as s>
-                        <option value="${s}">${s}</option>
+                    <#list statuses as s>
+                        <option value="${s.getStatus()}">${s.getStatus()}</option>
                     </#list>
                 </select>
             </div>

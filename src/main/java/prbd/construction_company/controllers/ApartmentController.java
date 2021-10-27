@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import prbd.construction_company.entities.SaleStatus;
 import prbd.construction_company.services.ApartmentService;
 import prbd.construction_company.services.CompanyService;
 import prbd.construction_company.services.HouseService;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -45,7 +47,7 @@ public class ApartmentController {
         model.addAttribute("apartments", apartmentService.allApartments());
         model.addAttribute("houses", houseService.allHouses());
         model.addAttribute("companies", companyService.allCompanies());
-        model.addAttribute("status", apartmentService.statusMap().values());
+        model.addAttribute("statuses", Arrays.asList(SaleStatus.values()));
 
         return "apartments";
     }

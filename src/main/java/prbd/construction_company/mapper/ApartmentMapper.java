@@ -19,6 +19,6 @@ public interface ApartmentMapper {
     @Mapping(target = "housePhoto", source = "entity.house.photo")
     @Mapping(target = "companyId", source = "entity.house.company.id")
     @Mapping(target = "houseId", source = "entity.house.id")
-    ApartmentForFilterDto toFiltered(Apartment entity);
+    ApartmentForFilterDto toDtoForFilter(Apartment entity);
 
 }
