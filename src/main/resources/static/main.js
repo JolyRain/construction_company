@@ -51,10 +51,10 @@ function filter(company, house, roomsCount, floorFrom, floorTo, priceFrom, price
         return parseInt(apart.roomsCount) === roomsCount || roomsCount === ALL
     }
     let byFloor = function (apart) {
-        return parseInt(apart.floorNumber) >= floorFrom && apart.floor <= floorTo
+        return parseInt(apart.floorNumber) >= floorFrom && parseInt(apart.floorNumber) <= floorTo
     }
     let byPrice = function (apart) {
-        return parseInt(apart.price) >= priceFrom && apart.price <= priceTo
+        return parseInt(apart.price) >= priceFrom && parseInt(apart.price) <= priceTo
     }
     let byStatus = function (apart) {
         return apart.status === status || status === ALL
@@ -137,19 +137,6 @@ function getApartments() {
             }
         }
     )
-}
-
-function clearForm() {
-    companyInput.value = ALL
-    company = ALL
-    houseInput.value = ALL
-    house = ALL
-    roomsCountInput.value = ALL
-    roomsCount = ALL
-    statusInput.value = ALL
-    status = ALL
-    filteredApartments = filter(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, status)
-    print(filteredApartments)
 }
 
 function checkField(field) {
