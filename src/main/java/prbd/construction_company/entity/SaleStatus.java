@@ -1,4 +1,4 @@
-package prbd.construction_company.entities;
+package prbd.construction_company.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

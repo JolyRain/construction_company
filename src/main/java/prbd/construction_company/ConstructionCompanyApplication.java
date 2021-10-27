@@ -3,7 +3,6 @@ package prbd.construction_company;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import prbd.construction_company.exception.NotFoundException;
 
 @Slf4j
 @SpringBootApplication

@@ -1,4 +1,4 @@
-package prbd.construction_company.controllers;
+package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import prbd.construction_company.services.HouseService;
+import prbd.construction_company.service.HouseService;
 
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +25,6 @@ public class HouseController {
         model.addAttribute("minPrice", houseService.getMinApartPrice(houseDto));
         model.addAttribute("avgPrice", houseService.getAvgPrice(houseDto));
         model.addAttribute("avgArea", houseService.getAvgArea(houseDto));
-
         model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return "house";
     }

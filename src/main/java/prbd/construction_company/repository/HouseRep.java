@@ -1,11 +1,13 @@
-package prbd.construction_company.repositories;
+package prbd.construction_company.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import prbd.construction_company.entities.Company;
-import prbd.construction_company.entities.House;
+import org.springframework.stereotype.Repository;
+import prbd.construction_company.entity.Company;
+import prbd.construction_company.entity.House;
 
+@Repository
 public interface HouseRep extends JpaRepository<House, Integer> {
     Iterable<House> findAllByCompany(Company company);
 

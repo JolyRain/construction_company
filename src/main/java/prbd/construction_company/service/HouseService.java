@@ -1,14 +1,11 @@
-package prbd.construction_company.services;
+package prbd.construction_company.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.House;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.HouseMapper;
-import prbd.construction_company.repositories.HouseRep;
+import prbd.construction_company.repository.HouseRep;
 
 import java.util.List;
 import java.util.stream.Collectors;

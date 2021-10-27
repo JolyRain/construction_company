@@ -84,9 +84,9 @@
                             <td>${house.getName()}</td>
                             <td>${house.getAddress()}</td>
                             <td>${house.getCompany().getName()}</td>
-                            <td>${house.getStartDate()}</td>
-                            <td>${house.getCompleteDate()}</td>
-                            <td>${house.getExploitDate()}</td>
+                            <td>${house.getStartDate().format(dateFormat)}</td>
+                            <td>${house.getCompleteDate().format(dateFormat)}</td>
+                            <td>${house.getExploitDate().format(dateFormat)}</td>
                             <td><img src="${house.getPhoto()}" width="100%" height="100%" alt=""></td>
                             <td>
                                 <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>

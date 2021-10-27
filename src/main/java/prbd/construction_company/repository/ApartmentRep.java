@@ -1,9 +1,9 @@
-package prbd.construction_company.repositories;
+package prbd.construction_company.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import prbd.construction_company.entities.Apartment;
+import prbd.construction_company.entity.Apartment;
 
 @Repository
 public interface ApartmentRep extends JpaRepository<Apartment, Integer> {

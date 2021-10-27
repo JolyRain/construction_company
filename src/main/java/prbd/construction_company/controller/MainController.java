@@ -1,10 +1,10 @@
-package prbd.construction_company.controllers;
+package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import prbd.construction_company.services.CompanyService;
+import prbd.construction_company.service.CompanyService;
 
 @RequiredArgsConstructor
 @Controller

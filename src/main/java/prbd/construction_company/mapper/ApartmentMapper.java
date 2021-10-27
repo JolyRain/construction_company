@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ApartmentForFilterDto;
-import prbd.construction_company.entities.Apartment;
+import prbd.construction_company.entity.Apartment;
 
 @Mapper
 public interface ApartmentMapper {

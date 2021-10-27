@@ -1,11 +1,11 @@
-package prbd.construction_company.services;
+package prbd.construction_company.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.CompanyMapper;
-import prbd.construction_company.repositories.CompanyRep;
+import prbd.construction_company.repository.CompanyRep;
 
 import java.util.List;
 import java.util.stream.Collectors;

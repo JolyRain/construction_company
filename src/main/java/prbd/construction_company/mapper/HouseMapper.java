@@ -3,7 +3,7 @@ package prbd.construction_company.mapper;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.House;
+import prbd.construction_company.entity.House;
 
 @Mapper
 public interface HouseMapper {

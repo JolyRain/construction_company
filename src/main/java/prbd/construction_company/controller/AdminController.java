@@ -1,4 +1,4 @@
-package prbd.construction_company.controllers;
+package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,12 +8,12 @@ import org.springframework.web.multipart.MultipartFile;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.dto.CompanyDto;
-import prbd.construction_company.services.ApartmentService;
-import prbd.construction_company.services.ClientService;
-import prbd.construction_company.services.CompanyService;
-import prbd.construction_company.services.HouseService;
+import prbd.construction_company.service.ApartmentService;
+import prbd.construction_company.service.ClientService;
+import prbd.construction_company.service.CompanyService;
+import prbd.construction_company.service.HouseService;
 
-import java.util.NoSuchElementException;
+import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,6 +32,7 @@ public class AdminController {
         model.addAttribute("houses", houseService.allHouses());
         model.addAttribute("apartments", apartmentService.allApartments());
         model.addAttribute("clients", clientService.allClients());
+        model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return "admin";
     }
 
@@ -47,17 +48,10 @@ public class AdminController {
         return REDIRECT_ADMIN_PAGE;
     }
 
-    //controllerAdvice | exceptionHandler
     @GetMapping("company-update/{id}")
     public String getUpdateCompanyForm(@PathVariable("id") Integer id, Model model) {
-        try {
-            var companyDto = companyService.getCompanyById(id);
-            if (companyDto == null) throw new NoSuchElementException();
-            model.addAttribute("company", companyDto);
-            return "company-new";
-        } catch (NumberFormatException | NoSuchElementException e) {
-            return REDIRECT_ADMIN_PAGE;
-        }
+        model.addAttribute("company", companyService.getCompanyById(id));
+        return "company-new";
     }
 
     @PostMapping("company-update/{id}")
@@ -87,15 +81,9 @@ public class AdminController {
 
     @GetMapping("client-update/{id}")
     public String getUpdateClientForm(@PathVariable("id") Integer id, Model model) {
-        try {
-            var clientDto = clientService.getClientById(id);
-            if (clientDto == null) throw new NoSuchElementException();
-            model.addAttribute("client", clientDto);
-            model.addAttribute("apartments", apartmentService.allApartments());
-            return "new-client";
-        } catch (NumberFormatException | NoSuchElementException e) {
-            return REDIRECT_ADMIN_PAGE;
-        }
+        model.addAttribute("client", clientService.getClientById(id));
+        model.addAttribute("apartments", apartmentService.allApartments());
+        return "new-client";
     }
 
     @PostMapping("client-update/{id}")
@@ -126,15 +114,9 @@ public class AdminController {
 
     @GetMapping("apartment-update/{id}")
     public String getUpdateApartmentForm(@PathVariable("id") Integer id, Model model) {
-        try {
-            var apartmentDto = apartmentService.getApartmentById(id);
-            if (apartmentDto == null) throw new NoSuchElementException();
-            model.addAttribute("apartment", apartmentDto);
-            model.addAttribute("apartments", apartmentService.allApartments());
-            return "apart-new";
-        } catch (NumberFormatException | NoSuchElementException e) {
-            return REDIRECT_ADMIN_PAGE;
-        }
+        model.addAttribute("apartment", apartmentService.getApartmentById(id));
+        model.addAttribute("apartments", apartmentService.allApartments());
+        return "apart-new";
     }
 
     @PostMapping("apartment-update/{id}")

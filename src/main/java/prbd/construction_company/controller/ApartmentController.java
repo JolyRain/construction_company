@@ -1,40 +1,25 @@
-package prbd.construction_company.controllers;
+package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import prbd.construction_company.entities.SaleStatus;
-import prbd.construction_company.services.ApartmentService;
-import prbd.construction_company.services.CompanyService;
-import prbd.construction_company.services.HouseService;
+import prbd.construction_company.entity.SaleStatus;
+import prbd.construction_company.service.ApartmentService;
+import prbd.construction_company.service.CompanyService;
+import prbd.construction_company.service.HouseService;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/apartments")
+@RequestMapping("apartments")
 public class ApartmentController {
 
     private final ApartmentService apartmentService;
     private final HouseService houseService;
     private final CompanyService companyService;
-
-    @GetMapping("{houseId}")
-    public String houseApartments(Model model, @PathVariable Integer houseId) {
-        try {
-            var houseDto = houseService.getHouseById(houseId);
-            var apartmentsFromHouse = houseDto.getApartments();
-            model.addAttribute("apartments", apartmentsFromHouse);
-            model.addAttribute("house", houseDto);
-            return allApartments(model);
-        } catch (NumberFormatException | NoSuchElementException e) {
-            return "redirect:/";
-        }
-    }
 
     @GetMapping
     public String allApartments(Model model) {
