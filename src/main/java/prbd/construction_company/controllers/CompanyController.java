@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import prbd.construction_company.dto.CompanyDto;
-import prbd.construction_company.entities.Company;
 import prbd.construction_company.services.CompanyService;
 
 import java.util.NoSuchElementException;
@@ -20,9 +18,9 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @GetMapping("{id}")
-    public String company(@PathVariable String id, Model model) {
+    public String company(@PathVariable Integer id, Model model) {
         try {
-            var companyDto = companyService.getCompanyById(Integer.parseInt(id)); //чето придумать нада
+            var companyDto = companyService.getCompanyById(id);
             model.addAttribute("company", companyDto);
             model.addAttribute("houses", companyDto.getHouses());
             model.addAttribute("title", "Компания " + companyDto.getName());

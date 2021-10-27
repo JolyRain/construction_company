@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import prbd.construction_company.services.CompanyService;
-import prbd.construction_company.services.HouseService;
 
 @RequiredArgsConstructor
-@Controller("/")
+@Controller
 public class MainController {
 
     private final CompanyService companyService;

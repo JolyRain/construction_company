@@ -6,6 +6,7 @@ import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.SaleStatus;
+import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ApartmentMapper;
 import prbd.construction_company.repositories.ApartmentRep;
 
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -27,15 +29,19 @@ public class ApartmentService {
     }
 
     public ApartmentDto getApartmentById(Integer id) {
-        return apartmentMapper.toDto(apartmentRep.findById(id).orElse(null), ApartmentMapper.CONTEXT);
+        return apartmentMapper
+                .toDto(apartmentRep.findById(id).orElseThrow(() -> new NotFoundException()), ApartmentMapper.CONTEXT);
     }
 
     public List<ApartmentDto> allApartments() {
         var apartmentDtoList = new ArrayList<ApartmentDto>();
-        apartmentRep.findAll().forEach(apartment -> apartmentDtoList.add(apartmentMapper.toDto(apartment, ApartmentMapper.CONTEXT)));
+
+        apartmentRep.findAll().forEach(apartment ->
+                apartmentDtoList.add(apartmentMapper.toDto(apartment, ApartmentMapper.CONTEXT)));
         return apartmentDtoList;
     }
 
+    //для delete можно void
     public ApartmentDto deleteApartment(ApartmentDto apartmentDto) {
         apartmentRep.delete(apartmentMapper.toEntity(apartmentDto, ApartmentMapper.CONTEXT));
         return apartmentDto;
@@ -67,9 +73,9 @@ public class ApartmentService {
 
     private Integer boundaryValues(ToIntFunction<ApartmentDto> attribute, Function<IntStream, OptionalInt> function) {
         var apartmentsDtoList = allApartments();
-        IntStream stream = apartmentsDtoList.stream().mapToInt(attribute);
-        OptionalInt result = function.apply(stream);
-        return result.isPresent() ? result.getAsInt() : -1;
+        var intStream = apartmentsDtoList.stream().mapToInt(attribute);
+        var optResult = function.apply(intStream);
+        return optResult.isPresent() ? optResult.getAsInt() : -1;
     }
 
     public Integer maxRoomsCount() {

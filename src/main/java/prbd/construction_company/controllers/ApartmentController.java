@@ -21,11 +21,10 @@ public class ApartmentController {
     private final HouseService houseService;
     private final CompanyService companyService;
 
-    @GetMapping("{house_id}")
-    public String houseApartments(Model model, @PathVariable String house_id) {
+    @GetMapping("{houseId}")
+    public String houseApartments(Model model, @PathVariable Integer houseId) {
         try {
-            var houseID = Integer.parseInt(house_id);
-            var houseDto = houseService.getHouseById(houseID);
+            var houseDto = houseService.getHouseById(houseId);
             var apartmentsFromHouse = houseDto.getApartments();
             model.addAttribute("apartments", apartmentsFromHouse);
             model.addAttribute("house", houseDto);

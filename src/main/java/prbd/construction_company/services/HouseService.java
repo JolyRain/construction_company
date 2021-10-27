@@ -2,12 +2,17 @@ package prbd.construction_company.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repositories.HouseRep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Service
