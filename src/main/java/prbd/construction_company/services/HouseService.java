@@ -1,8 +1,11 @@
 package prbd.construction_company.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.HouseDto;
+import prbd.construction_company.entities.House;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repositories.HouseRep;
@@ -32,4 +35,20 @@ public class HouseService {
         return houseMapper.toDto(houseRep.findById(id)
                 .orElseThrow(() -> new NotFoundException("House not found!")), HouseMapper.CONTEXT);
     }
+
+    public int getMaxApartPrice(HouseDto houseDto) {
+        return houseRep.maxApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+    }
+
+    public int getMinApartPrice(HouseDto houseDto) {
+        return houseRep.minApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+    }
+    public double getAvgPrice(HouseDto houseDto) {
+        return houseRep.findAvgPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+    }
+
+    public double getAvgArea(HouseDto houseDto) {
+        return houseRep.avgApartmentArea(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+    }
+
 }

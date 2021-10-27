@@ -29,8 +29,8 @@
                     <p class="lead">Завершение строительства ${house.completeDate}</p>
                     <p class="lead">Ввод в эксплуатацию ${house.exploitDate}</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                        <a href="/apartments/${house.id}"
-                           class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Подобрать квартиру</a>
+                        <a href="/house/${house.id}"
+                           class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Перейти</a>
                     </div>
                 </div>
             </div>
