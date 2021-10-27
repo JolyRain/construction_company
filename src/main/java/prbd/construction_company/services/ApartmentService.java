@@ -3,8 +3,8 @@ package prbd.construction_company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.ApartmentDto;
+import prbd.construction_company.dto.ApartmentForFilterDto;
 import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.Apartment;
 import prbd.construction_company.entities.SaleStatus;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ApartmentMapper;
@@ -13,8 +13,8 @@ import prbd.construction_company.repositories.ApartmentRep;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +39,13 @@ public class ApartmentService {
         apartmentRep.findAll().forEach(apartment ->
                 apartmentDtoList.add(apartmentMapper.toDto(apartment, ApartmentMapper.CONTEXT)));
         return apartmentDtoList;
+    }
+
+    public List<ApartmentForFilterDto> allApartmentsForFilter() {
+        return apartmentRep.findAll()
+                .stream()
+                .map(apartmentMapper::toFiltered)
+                .collect(Collectors.toList());
     }
 
     //для delete можно void

@@ -1,14 +1,10 @@
 package prbd.construction_company.services;
 
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Context;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.dto.HouseDto;
-import prbd.construction_company.entities.Company;
-import prbd.construction_company.entities.House;
 import prbd.construction_company.mapper.CompanyMapper;
-import prbd.construction_company.mapper.CycleAvoidingMappingContext;
 import prbd.construction_company.repositories.CompanyRep;
 
 import java.util.ArrayList;
