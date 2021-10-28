@@ -25,12 +25,12 @@
                 <div class="col-6 p-3">
                     <h1 class="display-6 fw-bold lh-1">${house.name}</h1>
                     <p class="lead">Адрес ${house.address}</p>
-                    <p class="lead">Начало строительства ${house.startDate}</p>
-                    <p class="lead">Завершение строительства ${house.completeDate}</p>
-                    <p class="lead">Ввод в эксплуатацию ${house.exploitDate}</p>
+                    <p class="lead">Начало строительства ${house.startDate.format(dateFormat)}</p>
+                    <p class="lead">Завершение строительства ${house.completeDate.format(dateFormat)}</p>
+                    <p class="lead">Ввод в эксплуатацию ${house.exploitDate.format(dateFormat)}</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                        <a href="/apartments/${house.id}"
-                           class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Подобрать квартиру</a>
+                        <a href="/house/${house.id}"
+                           class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Перейти</a>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,6 @@
-package prbd.construction_company.entities;
+package prbd.construction_company.entity;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SaleStatus {
     SALE("В продаже"), RESERVED("Забронирована"), SOLD("Продана");
@@ -8,6 +10,7 @@ public enum SaleStatus {
         this.status = status;
     }
 
+    @JsonValue
     public String getStatus() {
         return status;
     }

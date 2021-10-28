@@ -1,39 +1,25 @@
-package prbd.construction_company.controllers;
+package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import prbd.construction_company.services.ApartmentService;
-import prbd.construction_company.services.CompanyService;
-import prbd.construction_company.services.HouseService;
+import prbd.construction_company.entity.SaleStatus;
+import prbd.construction_company.service.ApartmentService;
+import prbd.construction_company.service.CompanyService;
+import prbd.construction_company.service.HouseService;
 
-import java.util.NoSuchElementException;
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/apartments")
+@RequestMapping("apartments")
 public class ApartmentController {
 
     private final ApartmentService apartmentService;
     private final HouseService houseService;
     private final CompanyService companyService;
-
-    @GetMapping("{house_id}")
-    public String houseApartments(Model model, @PathVariable String house_id) {
-        try {
-            var houseID = Integer.parseInt(house_id);
-            var houseDto = houseService.getHouseById(houseID);
-            var apartmentsFromHouse = houseDto.getApartments();
-            model.addAttribute("apartments", apartmentsFromHouse);
-            model.addAttribute("house", houseDto);
-            return allApartments(model);
-        } catch (NumberFormatException | NoSuchElementException e) {
-            return "redirect:/";
-        }
-    }
 
     @GetMapping
     public String allApartments(Model model) {
@@ -46,7 +32,7 @@ public class ApartmentController {
         model.addAttribute("apartments", apartmentService.allApartments());
         model.addAttribute("houses", houseService.allHouses());
         model.addAttribute("companies", companyService.allCompanies());
-        model.addAttribute("status", apartmentService.statusMap().values());
+        model.addAttribute("statuses", Arrays.asList(SaleStatus.values()));
 
         return "apartments";
     }

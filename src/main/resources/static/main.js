@@ -19,22 +19,6 @@ function filterInput(element) {
     element.value = element.value.replace(/[^\d]/g, '');
 }
 
-let col = $('</div>', {class: "col"})
-let card = $('</div>', {class: "row my-2 mx-1 p-4 pb-0 align-items-center rounded-3 border border-3"})
-let title = $('</div>', {class: "container row row-cols-2 m-0 mb-2 shadow-sm p-0"})
-    .append($('</div>', {class: "col"})
-        .append($('</p>', {id: "address"})))
-    .append($('</div>', {class: "col p-2"})
-        .append($('<img alt="" src="">', {id: "house_img"})))
-
-let description = $('<div class="col-7"></div>')
-
-let div_status = $('<div class="container m-1 p-0"></div>')
-
-let attribute = $('<p class="m-0"></p>');
-
-let layout_picture = $('</div>', {class: "col-5 p-0 shadow-sm"})
-
 const ALL = 'ALL'
 
 let companyInput, houseInput, roomsCountInput, floorFromInput, floorToInput, priceFromInput, priceToInput, statusInput
@@ -58,19 +42,19 @@ let priceFrom = -Infinity, priceTo = Infinity
 
 function filter(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, status) {
     let byCompany = function (apart) {
-        return parseInt(apart.company_id) === company || company === ALL
+        return parseInt(apart.companyId) === company || company === ALL
     }
     let byHouse = function (apart) {
-        return parseInt(apart.house_id) === house || house === ALL
+        return parseInt(apart.houseId) === house || house === ALL
     }
     let byRoomsCount = function (apart) {
-        return parseInt(apart.rooms_count) === roomsCount || roomsCount === ALL
+        return parseInt(apart.roomsCount) === roomsCount || roomsCount === ALL
     }
     let byFloor = function (apart) {
-        return parseInt(apart.floor) >= floorFrom && apart.floor <= floorTo
+        return parseInt(apart.floorNumber) >= floorFrom && parseInt(apart.floorNumber) <= floorTo
     }
     let byPrice = function (apart) {
-        return parseInt(apart.price) >= priceFrom && apart.price <= priceTo
+        return parseInt(apart.price) >= priceFrom && parseInt(apart.price) <= priceTo
     }
     let byStatus = function (apart) {
         return apart.status === status || status === ALL
@@ -91,23 +75,23 @@ function print(aparts) {
             '                    <div class="row my-2 mx-1 p-4 pb-0 align-items-center rounded-3 border border-3">\n' +
             '                        <div class="container row row-cols-2 m-0 mb-2 shadow-sm p-0">\n' +
             '                            <div class="col">\n' +
-            '                                <p id="address">' + escapeHtml(apart.address) + '</p>\n' +
+            '                                <p id="address">' + escapeHtml(apart.houseAddress) + '</p>\n' +
             '                            </div>\n' +
             '                            <div class="col p-2">\n' +
-            '                                <img id="house_img" src="' + escapeHtml(apart.house_photo) + '" width="100%" height="100%"\n' +
+            '                                <img id="house_img" src="' + escapeHtml(apart.housePhoto) + '" width="100%" height="100%"\n' +
             '                                     alt="">\n' +
             '                            </div>\n' +
             '                        </div>\n' +
             '                        <div class="col-4 p-0 shadow-sm">\n' +
             '                            <img class="scale"\n' +
-            '                                 src="' + escapeHtml(apart.layout_img) + '" alt=""\n' +
+            '                                 src="' + escapeHtml(apart.layoutImg) + '" alt=""\n' +
             '                                 width="100%" height="100%" id="layout_img">\n' +
             '                        </div>\n' +
             '                        <div class="col-8">\n ' +
-            '                            <p id="floor" class="m-0">Этаж &ndash; ' + escapeHtml(apart.floor) + '</p>\n' +
+            '                            <p id="floor" class="m-0">Этаж &ndash; ' + escapeHtml(apart.floorNumber) + '</p>\n' +
             '                            <p id="number" class="m-0">№ квартиры &ndash; ' + escapeHtml(apart.number) + '</p>\n' +
-            '                            <p id="roomsCount" class="m-0">Кол-во комнат &ndash; ' + escapeHtml(apart.rooms_count) + '</p>\n' +
-            '                            <p id="totalArea" class="m-0" title="общая/жилая">Площадь &ndash; ' + escapeHtml(apart.total_area) + '/' + escapeHtml(apart.living_area) + '\n' +
+            '                            <p id="roomsCount" class="m-0">Кол-во комнат &ndash; ' + escapeHtml(apart.roomsCount) + '</p>\n' +
+            '                            <p id="totalArea" class="m-0" title="общая/жилая">Площадь &ndash; ' + escapeHtml(apart.totalArea) + '/' + escapeHtml(apart.livingArea) + '\n' +
             '                                м<sup>2</sup></p>\n' +
             '                            <p id="price" class="m-0 fw-bold">Цена &ndash; ' + escapeHtml(formatNumber(apart.price)) + ' руб.</p>\n' +
             '                        </div>\n' +
@@ -127,10 +111,10 @@ function formatNumber(num) {
 function getApartments() {
     initInputs()
     $.get('/filter', function (data) {
+            console.log(data)
             allApartments = data
             filteredApartments = data
             print(data)
-            console.log(data)
             companyInput.onchange = function () {
                 company = companyInput.value === ALL ? ALL : parseInt(companyInput.value)
                 filteredApartments = filter(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, status)
@@ -153,19 +137,6 @@ function getApartments() {
             }
         }
     )
-}
-
-function clearForm() {
-    companyInput.value = ALL
-    company = ALL
-    houseInput.value = ALL
-    house = ALL
-    roomsCountInput.value = ALL
-    roomsCount = ALL
-    statusInput.value = ALL
-    status = ALL
-    filteredApartments = filter(company, house, roomsCount, floorFrom, floorTo, priceFrom, priceTo, status)
-    print(filteredApartments)
 }
 
 function checkField(field) {

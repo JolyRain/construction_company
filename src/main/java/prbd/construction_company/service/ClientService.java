@@ -1,14 +1,14 @@
-package prbd.construction_company.services;
+package prbd.construction_company.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.ClientDto;
-import prbd.construction_company.entities.Client;
+import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ClientMapper;
-import prbd.construction_company.repositories.ClientRep;
+import prbd.construction_company.repository.ClientRep;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -18,13 +18,15 @@ public class ClientService {
     private final ClientMapper clientMapper;
 
     public List<ClientDto> allClients() {
-        var clientDtoList = new ArrayList<ClientDto>();
-        clientRep.findAll().forEach(client -> clientDtoList.add(clientMapper.toDto(client, ClientMapper.CONTEXT)));
-        return clientDtoList;
+        return clientRep.findAll()
+                .stream()
+                .map(client -> clientMapper.toDto(client, ClientMapper.CONTEXT))
+                .collect(Collectors.toList());
     }
 
     public ClientDto getClientById(Integer id) {
-        return clientMapper.toDto(clientRep.findById(id).orElse(null), ClientMapper.CONTEXT);
+        return clientMapper.toDto(clientRep.findById(id)
+                .orElseThrow(() -> new NotFoundException("Client not found!")), ClientMapper.CONTEXT);
     }
 
     public ClientDto addClient(ClientDto clientDto) {
@@ -32,15 +34,12 @@ public class ClientService {
         return clientDto;
     }
 
-    public ClientDto deleteClient(ClientDto clientDto) {
+    public void deleteClient(ClientDto clientDto) {
         clientRep.delete(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
-        return clientDto;
     }
 
-    public ClientDto deleteClient(Integer id) {
-        var clientDto = getClientById(id);
-        deleteClient(clientDto);
-        return clientDto;
+    public void deleteClient(Integer id) {
+        deleteClient(getClientById(id));
     }
 
 
