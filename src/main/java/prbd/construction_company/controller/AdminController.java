@@ -55,7 +55,7 @@ public class AdminController {
     }
 
     @PostMapping("company-update/{id}")
-    public String updateCompany(CompanyDto companyDto, @RequestParam MultipartFile image) {
+    public String updateCompany(CompanyDto companyDto) {
         companyService.addCompany(companyDto);
         return REDIRECT_ADMIN_PAGE;
     }
