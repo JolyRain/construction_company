@@ -1,9 +1,13 @@
 package prbd.construction_company.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "house")
 public class House {
@@ -13,7 +17,7 @@ public class House {
     @Column(name = "house_id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company", nullable = false)
     private Company company;
 
@@ -38,95 +42,4 @@ public class House {
     @Column(name = "photo")
     private String photo;
 
-    public House() {
-    }
-
-    public House(Company company, String address, String name,
-                 LocalDate startDate, LocalDate completeDate, LocalDate exploitDate, String photo) {
-        this.company = company;
-        this.address = address;
-        this.name = name;
-        this.startDate = startDate;
-        this.completeDate = completeDate;
-        this.exploitDate = exploitDate;
-        this.photo = photo;
-    }
-
-    public House(Company company, String address, String name) {
-        this.company = company;
-        this.address = address;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getCompleteDate() {
-        return completeDate;
-    }
-
-    public void setCompleteDate(LocalDate completeDate) {
-        this.completeDate = completeDate;
-    }
-
-    public LocalDate getExploitDate() {
-        return exploitDate;
-    }
-
-    public void setExploitDate(LocalDate exploitDate) {
-        this.exploitDate = exploitDate;
-    }
-
-    public Set<Apartment> getApartments() {
-        return apartments;
-    }
-
-    public void setApartments(Set<Apartment> apartments) {
-        this.apartments = apartments;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 }

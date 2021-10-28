@@ -1,17 +1,17 @@
 package prbd.construction_company.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import prbd.construction_company.serialization.ApartmentSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "apartment")
 @JsonSerialize(using = ApartmentSerializer.class)
@@ -24,7 +24,7 @@ public class Apartment {
 
     private int number;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house", nullable = false)
     private House house;
 

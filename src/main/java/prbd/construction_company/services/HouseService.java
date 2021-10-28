@@ -1,28 +1,32 @@
 package prbd.construction_company.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import prbd.construction_company.entities.House;
+import prbd.construction_company.dto.HouseDto;
+import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repositories.HouseRep;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
 @Service
 public class HouseService {
     private final HouseRep houseRep;
+    private final HouseMapper houseMapper;
 
-    @Autowired
-    public HouseService(HouseRep houseRep) {
-        this.houseRep = houseRep;
+    public List<HouseDto> allHouses() {
+        var houseDtoList = new ArrayList<HouseDto>();
+        houseRep.findAll().forEach(house -> houseDtoList.add(houseMapper.toDto(house, HouseMapper.CONTEXT)));
+        return houseDtoList;
     }
 
-    public Iterable<House> allHouses() {
-        return houseRep.findAll();
+    public HouseDto addHouse(HouseDto houseDto) {
+        houseRep.save(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+        return houseDto;
     }
 
-    public void addHouse(House house) {
-        houseRep.save(house);
-    }
-
-    public House getHouseById(Integer id) {
-        return houseRep.findById(id).orElse(null);
+    public HouseDto getHouseById(Integer id) {
+        return houseMapper.toDto(houseRep.findById(id).orElse(null), HouseMapper.CONTEXT);
     }
 }
