@@ -70,6 +70,14 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>8.0.2</version>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -112,11 +120,6 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>8.0.2</version>
-                <configuration>
-                    <url>jdbc:postgresql://localhost:5432/construction_company</url>
-                    <user>postgres</user>
-                    <password>root</password>
-                </configuration>
             </plugin>
         </plugins>
     </build>
