@@ -3,11 +3,14 @@ package prbd.construction_company.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.dto.CompanyDto;
+import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.service.ApartmentService;
 import prbd.construction_company.service.ClientService;
 import prbd.construction_company.service.CompanyService;
@@ -27,7 +30,7 @@ public class AdminController {
     private final CompanyService companyService;
 
     @GetMapping
-    public String admin(Model model) {
+    public String getAdminPage(Model model) {
         model.addAttribute("companies", companyService.allCompanies());
         model.addAttribute("houses", houseService.allHouses());
         model.addAttribute("apartments", apartmentService.allApartments());
@@ -63,6 +66,36 @@ public class AdminController {
     @GetMapping("company-delete/{id}")
     public String deleteCompany(@PathVariable("id") Integer id) {
         companyService.deleteCompany(id);
+        return REDIRECT_ADMIN_PAGE;
+    }
+
+    //===============crud house===============//
+    @GetMapping("house-new")
+    public String getHouseForm() {
+        return "house-new";
+    }
+
+    @PostMapping("house-new")
+    public String createHouse(HouseDto houseDto) {
+        houseService.addHouse(houseDto);
+        return REDIRECT_ADMIN_PAGE;
+    }
+
+    @GetMapping("house-update/{id}")
+    public String getUpdateHouseForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("house", houseService.getHouseById(id));
+        return "house-new";
+    }
+
+    @PostMapping("house-update/{id}")
+    public String updateHouse(HouseDto houseDto) {
+        houseService.addHouse(houseDto);
+        return REDIRECT_ADMIN_PAGE;
+    }
+
+    @GetMapping("house-delete/{id}")
+    public String deleteHouse(@PathVariable("id") Integer id) {
+        houseService.deleteHouse(id);
         return REDIRECT_ADMIN_PAGE;
     }
 
