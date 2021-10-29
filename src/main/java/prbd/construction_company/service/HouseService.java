@@ -2,7 +2,6 @@ package prbd.construction_company.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.CompanyMapper;
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 public class HouseService {
     private final HouseRep houseRep;
     private final HouseMapper houseMapper;
+    private final CompanyService companyService;
 
     public List<HouseDto> allHouses() {
         return houseRep.findAll()
@@ -25,7 +25,12 @@ public class HouseService {
                 .collect(Collectors.toList());
     }
 
-    public HouseDto addHouse(HouseDto houseDto) {
+    public HouseDto addHouse(HouseDto houseDto, Integer companyId) {
+        var companyDto = companyService.getCompanyById(companyId);
+        houseDto.setCompany(companyDto);
+        companyDto.getHouses().add(houseDto);
+
+        companyService.addCompany(companyDto);
         houseRep.save(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
         return houseDto;
     }
@@ -50,6 +55,7 @@ public class HouseService {
     public int getMinApartPrice(HouseDto houseDto) {
         return houseRep.minApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
     }
+
     public double getAvgPrice(HouseDto houseDto) {
         return houseRep.findAvgPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
     }

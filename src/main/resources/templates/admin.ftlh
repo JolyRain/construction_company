@@ -60,7 +60,7 @@
             </div>
             <div class="tab-pane fade show active" id="houses">
                 <div class="container-fluid w-25">
-                    <a class="btn btn-dark w-100" href="addUserForm.php">Добавить дом</a>
+                    <a class="btn btn-dark w-100" href="/admin/house-new">Добавить дом</a>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -87,12 +87,16 @@
                             <td>${house.getStartDate().format(dateFormat)}</td>
                             <td>${house.getCompleteDate().format(dateFormat)}</td>
                             <td>${house.getExploitDate().format(dateFormat)}</td>
-                            <td><img src="${house.getPhoto()}" width="100%" height="100%" alt=""></td>
                             <td>
-                                <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
+                                <img src="<#if house.getPhoto()??>${house.getPhoto()}<#else>https://cdn1.flamp.ru/d9a5cb053d4534fcfcf142e966d896b5.jpg </#if>"
+                                     width="100%" height="100%" alt=""></td>
+                            <td>
+                                <a class="btn bg-white border-dark btn-sm"
+                                   href="/admin/house-update/${house.getId()}">Изменить</a>
                             </td>
                             <td>
-                                <a class="btn btn-danger btn-sm" href="">Удалить</a>
+                                <a class="btn btn-danger btn-sm"
+                                   href="/admin/house-delete/${house.getId()}">Удалить</a>
                             </td>
                         </tr>
                     </#list>

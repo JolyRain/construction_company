@@ -1,12 +1,10 @@
 package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.dto.CompanyDto;
@@ -16,6 +14,7 @@ import prbd.construction_company.service.ClientService;
 import prbd.construction_company.service.CompanyService;
 import prbd.construction_company.service.HouseService;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
@@ -71,25 +70,27 @@ public class AdminController {
 
     //===============crud house===============//
     @GetMapping("house-new")
-    public String getHouseForm() {
+    public String getHouseForm(Model model) {
+        model.addAttribute("companies", companyService.allCompanies());
         return "house-new";
     }
 
     @PostMapping("house-new")
-    public String createHouse(HouseDto houseDto) {
-        houseService.addHouse(houseDto);
+    public String createHouse(HouseDto houseDto, @RequestParam Integer companyId) {
+        houseService.addHouse(houseDto, companyId);
         return REDIRECT_ADMIN_PAGE;
     }
 
     @GetMapping("house-update/{id}")
     public String getUpdateHouseForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("house", houseService.getHouseById(id));
+        model.addAttribute("companies", companyService.allCompanies());
         return "house-new";
     }
 
     @PostMapping("house-update/{id}")
-    public String updateHouse(HouseDto houseDto) {
-        houseService.addHouse(houseDto);
+    public String updateHouse(HouseDto houseDto, @RequestParam Integer companyId) {
+        houseService.addHouse(houseDto, companyId);
         return REDIRECT_ADMIN_PAGE;
     }
 
