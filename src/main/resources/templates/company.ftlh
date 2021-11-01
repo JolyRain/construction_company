@@ -1,5 +1,6 @@
 <#import "blocks/base.ftlh" as base>
 <#import "blocks/header.ftlh" as h>
+<#import "utils.ftlh" as util>
 
 <@base.page title=title>
     <@h.header />
@@ -19,15 +20,15 @@
             <div class="row p-4 align-items-center rounded-3 border shadow">
                 <div class="col-5 p-0 shadow">
                     <img class=""
-                         src="${house.photo}" alt=""
+                         src="${util.getImage(house.getPhoto())}"
                          width="100%" height="100%">
                 </div>
                 <div class="col-6 p-3">
                     <h1 class="display-6 fw-bold lh-1">${house.name}</h1>
                     <p class="lead">Адрес ${house.address}</p>
-                    <p class="lead">Начало строительства ${house.startDate.format(dateFormat)}</p>
-                    <p class="lead">Завершение строительства ${house.completeDate.format(dateFormat)}</p>
-                    <p class="lead">Ввод в эксплуатацию ${house.exploitDate.format(dateFormat)}</p>
+                    <p class="lead">${(house.startDate??)?then("Начало строительства " + house.startDate.format(dateFormat), "")}</p>
+                    <p class="lead">${(house.completeDate??)?then("Завершение строительства " + house.completeDate.format(dateFormat), "")}</p>
+                    <p class="lead">${(house.exploitDate??)?then("Ввод в эксплуатацию " + house.exploitDate.format(dateFormat), "")}</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
                         <a href="/house/${house.id}"
                            class="btn btn-outline-dark btn-lg px-lg-5 me-md-2">Перейти</a>

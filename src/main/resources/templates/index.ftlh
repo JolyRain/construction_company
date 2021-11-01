@@ -1,6 +1,6 @@
 <#import "blocks/base.ftlh" as base>
 <#import "blocks/header.ftlh" as h>
-
+<#import "utils.ftlh" as util>
 <@base.page title=title>
     <@h.header />
     <div class="px-4 py-5 my-5 text-center">
@@ -10,7 +10,7 @@
         <div class="container col-xxl-8 px-4 py-5">
             <div class="row shadow-lg flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="${company.getLogo()}"
+                    <img src="${util.getImage(company.getLogo())}"
                          class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
                          loading="lazy">
                 </div>

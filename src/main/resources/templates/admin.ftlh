@@ -1,6 +1,6 @@
 <#import "blocks/base.ftlh" as base>
 <#import "blocks/header.ftlh" as h>
-<#--<#import "blocks/apartment-filter.ftlh" as f>-->
+<#import "utils.ftlh" as util>
 
 <@base.page title="Админка">
     <@h.header />
@@ -44,7 +44,7 @@
                             <td>${company.getId()}</td>
                             <td>${company.getName()}</td>
                             <td>${company.getDescription()}</td>
-                            <td><img src="${company.getLogo()}" width="50%" height="50%" alt=""></td>
+                            <td><img src="${util.getImage(company.getLogo())}" width="50%" height="50%" alt=""></td>
                             <td>
                                 <a class="btn bg-white border-dark btn-sm"
                                    href="/admin/company-update/${company.getId()}">Изменить</a>
@@ -84,11 +84,11 @@
                             <td>${house.getName()}</td>
                             <td>${house.getAddress()}</td>
                             <td>${house.getCompany().getName()}</td>
-                            <td>${house.getStartDate().format(dateFormat)}</td>
-                            <td>${house.getCompleteDate().format(dateFormat)}</td>
-                            <td>${house.getExploitDate().format(dateFormat)}</td>
+                            <td>${(house.getStartDate()??)?then(house.getStartDate().format(dateFormat), "")}</td>
+                            <td>${(house.getCompleteDate()??)?then(house.getCompleteDate().format(dateFormat), "")}</td>
+                            <td>${(house.getExploitDate()??)?then(house.getExploitDate().format(dateFormat), "")}</td>
                             <td>
-                                <img src="<#if house.getPhoto()??>${house.getPhoto()}<#else>https://cdn1.flamp.ru/d9a5cb053d4534fcfcf142e966d896b5.jpg </#if>"
+                                <img src="${util.getImage(house.getPhoto())}"
                                      width="100%" height="100%" alt=""></td>
                             <td>
                                 <a class="btn bg-white border-dark btn-sm"
@@ -129,7 +129,7 @@
                     <#list apartments as apartment>
                         <tr>
                             <td>${apartment.getId()}</td>
-                            <td><img src="${apartment.getLayoutImg()}" width="100%" height="100%"></td>
+                            <td><img src="${util.getImage(apartment.getLayoutImg())}" width="100%" height="100%"></td>
                             <td>${apartment.getHouse().getName()}</td>
                             <td>${apartment.getEntranceNumber()}</td>
                             <td>${apartment.getFloorNumber()}</td>

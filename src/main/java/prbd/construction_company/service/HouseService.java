@@ -9,6 +9,7 @@ import prbd.construction_company.mapper.HouseMapper;
 import prbd.construction_company.repository.HouseRep;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -49,19 +50,27 @@ public class HouseService {
     }
 
     public int getMaxApartPrice(HouseDto houseDto) {
-        return houseRep.maxApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+        var optMaxPrice = Optional.ofNullable(
+                houseRep.maxApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT)));
+        return optMaxPrice.orElse(0);
     }
 
     public int getMinApartPrice(HouseDto houseDto) {
-        return houseRep.minApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+        var optMinPrice = Optional.ofNullable(
+                houseRep.minApartmentPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT)));
+        return optMinPrice.orElse(0);
     }
 
     public double getAvgPrice(HouseDto houseDto) {
-        return houseRep.findAvgPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+        var optAvgPrice = Optional.ofNullable(
+                houseRep.findAvgPrice(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT)));
+        return optAvgPrice.orElse(0);
     }
 
     public double getAvgArea(HouseDto houseDto) {
-        return houseRep.avgApartmentArea(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT));
+        var optAvgArea = Optional.ofNullable(
+                houseRep.avgApartmentArea(houseMapper.toEntity(houseDto, HouseMapper.CONTEXT)));
+        return optAvgArea.orElse(0.0);
     }
 
 }

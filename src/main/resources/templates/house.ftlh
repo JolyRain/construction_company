@@ -1,5 +1,6 @@
 <#import "blocks/base.ftlh" as base>
 <#import "blocks/header.ftlh" as h>
+<#import "utils.ftlh" as utils>
 
 <@base.page title=title>
     <@h.header />
@@ -27,17 +28,17 @@
                 <div class="row p-4 align-items-center rounded-3 ">
                     <div class="col-5 p-0">
                         <img class=""
-                             src="${house.photo}" alt=""
+                             src="${utils.getImage(house.getPhoto())}" alt=""
                              width="100%" height="100%">
                     </div>
                     <div class="col-6 p-3">
-                        <p class="">Адрес ${house.address}</p>
-                        <p class="">Начало строительства ${house.startDate.format(dateFormat)}</p>
-                        <p class="">Завершение строительства ${house.completeDate.format(dateFormat)}</p>
-                        <p class="">Ввод в эксплуатацию ${house.exploitDate.format(dateFormat)}</p>
-                        <p class="fw-bold">Стоимость квартир от ${minPrice} до ${maxPrice} руб.</p>
-                        <p class="fw-bold">Средняя стоимость квартиры ${avgPrice} руб.</p>
-                        <p class="fw-bold">Средняя площадь квартиры ${avgArea} м<sup>2</sup></p>
+                        <p class="lead">Адрес ${house.address}</p>
+                        <p class="lead">${(house.startDate??)?then("Начало строительства " + house.startDate.format(dateFormat), "")}</p>
+                        <p class="lead">${(house.completeDate??)?then("Завершение строительства " + house.completeDate.format(dateFormat), "")}</p>
+                        <p class="lead">${(house.exploitDate??)?then("Ввод в эксплуатацию " + house.exploitDate.format(dateFormat), "")}</p>
+                        <p class="fw-bold lead">Стоимость квартир от ${minPrice} до ${maxPrice} руб.</p>
+                        <p class="fw-bold lead">Средняя стоимость квартиры ${avgPrice} руб.</p>
+                        <p class="fw-bold lead">Средняя площадь квартиры ${avgArea} м<sup>2</sup></p>
 
                     </div>
                 </div>
@@ -49,7 +50,7 @@
                             <div class="row my-2 mx-1 p-4 pb-0 align-items-center rounded-3 border border-3">
                                 <div class="col-5 p-0 shadow-sm">
                                     <img class=""
-                                         src="${apartment.layoutImg}" alt=""
+                                         src="${utils.getImage(apartment.layoutImg)}" alt=""
                                          width="100%" height="100%" id="layout_img">
                                 </div>
                                 <div class="col-7">
