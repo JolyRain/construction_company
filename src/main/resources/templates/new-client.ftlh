@@ -24,11 +24,13 @@
             <div class="col-12 text-center mb-3">
                 <p>Заселить в квартиру</p>
             </div>
-
+            <#if client??>
+                <#assign ownApartmentIds = client.getApartments()?map(apart -> apart.id)>
+            </#if>
             <#list apartments as apart>
                 <div class="col-4 form-check">
-                    <input class="form-check-input" type="checkbox" value="${apart.id}"
-                           id="apart">
+                    <input class="form-check-input" type="checkbox" value="${apart.id}" name="apartmentIds" id="apart"
+                            <#if ownApartmentIds?seq_contains(apart.id)>checked</#if>>
                     <label class="form-check-label" for="apart">
                         ${apart.getHouse().getName()}, №кв: ${apart.getNumber()}
                     </label>
@@ -37,11 +39,7 @@
             <div class="col-4"></div>
             <div class="col-4">
                 <button class="btn mt-3 btn-lg w-100 ${(client??)?then('btn-success','btn-primary')}" type="submit" id="send-client">
-                    <#if client??>
-                        Изменить
-                    <#else>
-                        Добавить клиента
-                    </#if>
+                    ${(client??)?then("Изменить", "Добавить клиента")}
                 </button>
             </div>
             <div class="col-4"></div>

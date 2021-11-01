@@ -1,7 +1,6 @@
 package prbd.construction_company.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,8 @@ import prbd.construction_company.service.ClientService;
 import prbd.construction_company.service.CompanyService;
 import prbd.construction_company.service.HouseService;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -72,6 +71,7 @@ public class AdminController {
     @GetMapping("house-new")
     public String getHouseForm(Model model) {
         model.addAttribute("companies", companyService.allCompanies());
+        model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return "house-new";
     }
 
@@ -85,6 +85,7 @@ public class AdminController {
     public String getUpdateHouseForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("house", houseService.getHouseById(id));
         model.addAttribute("companies", companyService.allCompanies());
+        model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return "house-new";
     }
 
@@ -108,21 +109,25 @@ public class AdminController {
     }
 
     @PostMapping("client-new")
-    public String newClient(ClientDto clientDto) {
-        clientService.addClient(clientDto);
+    public String newClient(ClientDto clientDto,
+                            @RequestParam(required = false) List<Integer> apartmentIds) {
+        clientService.addClient(clientDto, apartmentIds);
         return REDIRECT_ADMIN_PAGE;
     }
 
     @GetMapping("client-update/{id}")
     public String getUpdateClientForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("client", clientService.getClientById(id));
+        var client = clientService.getClientById(id);
+        model.addAttribute("client", client);
         model.addAttribute("apartments", apartmentService.allApartments());
+        model.addAttribute("ownApartments", client.getApartments());
         return "new-client";
     }
 
     @PostMapping("client-update/{id}")
-    public String updateClient(ClientDto clientDto) {
-        clientService.addClient(clientDto);
+    public String updateClient(ClientDto clientDto,
+                               @RequestParam(required = false) List<Integer> apartmentIds) {
+        clientService.addClient(clientDto, apartmentIds);
         return REDIRECT_ADMIN_PAGE;
     }
 

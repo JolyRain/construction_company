@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -28,6 +29,6 @@ public class HouseDto {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate exploitDate;
 
-    private Set<ApartmentDto> apartments;
+    private Set<ApartmentDto> apartments = new HashSet<>();
     private String photo;
 }

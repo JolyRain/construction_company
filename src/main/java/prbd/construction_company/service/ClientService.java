@@ -16,6 +16,7 @@ public class ClientService {
 
     private final ClientRep clientRep;
     private final ClientMapper clientMapper;
+    private final ApartmentService apartmentService;
 
     public List<ClientDto> allClients() {
         return clientRep.findAll()
@@ -29,7 +30,15 @@ public class ClientService {
                 .orElseThrow(() -> new NotFoundException("Client not found!")), ClientMapper.CONTEXT);
     }
 
-    public ClientDto addClient(ClientDto clientDto) {
+    public ClientDto addClient(ClientDto clientDto, List<Integer> apartmentIds) {
+        clientDto.getApartments().clear();
+        if (apartmentIds != null) {
+            apartmentIds.forEach(apartmentId -> {
+                var apartment = apartmentService.getApartmentById(apartmentId);
+                clientDto.getApartments().add(apartment);
+                apartment.getOwners().add(clientDto);
+            });
+        }
         clientRep.save(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
         return clientDto;
     }

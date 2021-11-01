@@ -39,17 +39,17 @@
             <div class="col-4 mb-3 text-center">
                 <label for="startDate" class="mb-1">Начало строительства</label>
                 <input type="date" class="form-control text-center" name="startDate" id="startDate"
-                       value="<#if house??>${house.getStartDate()}</#if>">
+                       value="${house.startDate!""}">
             </div>
             <div class="col-4 mb-3 text-center">
                 <label for="completeDate" class="mb-1">Завершение строительства</label>
                 <input type="date" class="form-control text-center" name="completeDate" id="completeDate"
-                       value="<#if house??>${house.getCompleteDate()}</#if>">
+                       value="${house.completeDate!""}">
             </div>
             <div class="col-4 mb-3 text-center">
                 <label for="exploitDate" class="mb-1">Ввод в эксплуатацию</label>
                 <input type="date" class="form-control text-center" name="exploitDate" id="exploitDate"
-                       value="<#if house??>${house.getExploitDate()}</#if>">
+                       value="${house.exploitDate!""}">
             </div>
 
             <div class="form-group mb-3 text-center">

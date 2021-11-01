@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,6 +17,6 @@ public class CompanyDto {
     private int id;
     private String name;
     private String description;
-    private Set<HouseDto> houses;
+    private Set<HouseDto> houses = new HashSet<>();
     private String logo;
 }

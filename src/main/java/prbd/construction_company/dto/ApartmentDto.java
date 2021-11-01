@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import prbd.construction_company.entity.SaleStatus;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -23,6 +24,6 @@ public class ApartmentDto {
     private float livingArea;
     private int price;
     private SaleStatus status;
-    private Set<ClientDto> owners;
+    private Set<ClientDto> owners = new HashSet<>();
     private String layoutImg;
 }
