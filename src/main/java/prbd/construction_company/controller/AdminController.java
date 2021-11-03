@@ -3,20 +3,18 @@ package prbd.construction_company.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.dto.HouseDto;
 import prbd.construction_company.entity.SaleStatus;
-import prbd.construction_company.service.ApartmentService;
-import prbd.construction_company.service.ClientService;
-import prbd.construction_company.service.CompanyService;
-import prbd.construction_company.service.HouseService;
+import prbd.construction_company.service.*;
 
+import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,6 +27,7 @@ public class AdminController {
     private final HouseService houseService;
     private final ClientService clientService;
     private final CompanyService companyService;
+    private final ValidationService validationService;
 
     @GetMapping
     public String getAdminPage(Model model) {
@@ -47,21 +46,36 @@ public class AdminController {
     }
 
     @PostMapping("company-new")
-    public String createCompany(CompanyDto companyDto) {
-        companyService.addCompany(companyDto);
-        return REDIRECT_ADMIN_PAGE;
+    public String createCompany(@Valid CompanyDto companyDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("company", companyDto);
+        } else {
+            companyService.addCompany(companyDto);
+            model.addAttribute("message", "Компания успешно добавлена");
+        }
+        return getCompanyForm();
     }
 
     @GetMapping("company-update/{id}")
     public String getUpdateCompanyForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("company", companyService.getCompanyById(id));
+        model.addAttribute("update", true);
         return "company-new";
     }
 
     @PostMapping("company-update/{id}")
-    public String updateCompany(CompanyDto companyDto) {
-        companyService.addCompany(companyDto);
-        return REDIRECT_ADMIN_PAGE;
+    public String updateCompany(@Valid CompanyDto companyDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("company", companyDto);
+        } else {
+            companyService.addCompany(companyDto);
+            model.addAttribute("message", "Компания успешно изменена");
+        }
+        return getUpdateCompanyForm(companyDto.getId(), model);
     }
 
     @GetMapping("company-delete/{id}")
