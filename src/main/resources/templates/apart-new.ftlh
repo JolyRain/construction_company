@@ -38,7 +38,7 @@
             </div>
             <div class="col-3 mb-3">
                 <label for="number" class="mb-1">Номер</label>
-                <input type="text" class="form-control text-center" name="number" id="number" oninput="filterInput(this, true)"
+                <input type="number" class="form-control text-center" name="number" id="number" oninput="filterInput(this, true)"
                        value="<#if apartment??>${apartment.getNumber()}</#if>">
             </div>
             <div class="col-3 mb-3 text-center">
@@ -61,17 +61,17 @@
 
             <div class="col-4 mb-3 text-center">
                 <label for="totalArea" class="mb-1">Общая площадь, м<sup>2</sup></label>
-                <input type="text" class="form-control text-center" name="totalArea" id="totalArea" oninput="filterInput(this)"
+                <input type="number" class="form-control text-center" name="totalArea" id="totalArea" oninput="filterInput(this)"
                        value="<#if apartment??>${apartment.getTotalArea()}</#if>">
             </div>
             <div class="col-4 mb-3 text-center">
                 <label for="livingArea" class="mb-1">Жилая площадь, м<sup>2</sup></label>
-                <input type="text" class="form-control text-center" name="livingArea" id="livingArea" oninput="filterInput(this)"
+                <input type="number" class="form-control text-center" name="livingArea" id="livingArea" oninput="filterInput(this)"
                        value="<#if apartment??>${apartment.getLivingArea()}</#if>">
             </div>
             <div class="col-4 mb-3 text-center">
                 <label for="price" class="mb-1">Цена, руб</label>
-                <input type="text" class="form-control text-center" name="price" id="price" oninput="filterInput(this)"
+                <input type="number" class="form-control text-center" name="price" id="price" oninput="filterInput(this)"
                        value="<#if apartment??>${apartment.getPrice()}</#if>">
             </div>
 

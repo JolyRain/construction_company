@@ -8,7 +8,7 @@
         <div class="container text-center w-75 mb-3">
             <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1 ">Новая компания</h6>
         </div>
-        <form class="w-100" method="post" enctype="multipart/form-data"
+        <form class="w-100 row" method="post" enctype="multipart/form-data"
               action="<#if company??>/admin/company-update/${company.getId()} <#else> /admin/company-new</#if>">
             <div class="form-group mb-3">
                 <label for="name" class="mb-1">Название</label>
@@ -27,12 +27,10 @@
                        placeholder="Вставьте ссылку на картинку, полноценную загрузку файлов потом сделаю"
                        value="<#if company??>${company.getLogo()}</#if>">
             </div>
-            <div class="form-group">
-                <label for="image">Example file input</label>
-                <input type="file" class="form-control-file" id="image" name="file">
-            </div>
-            <div class="form-group">
-                <button class="btn mt-3 btn-lg btn-dark w-50" type="submit" id="send-company">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button class="btn mt-3 w-100 ${(company??)?then('btn-success','btn-primary')}"
+                        type="submit" id="send-house">
                     <#if company??>
                         Изменить
                     <#else>
@@ -40,6 +38,7 @@
                     </#if>
                 </button>
             </div>
+            <div class="col-4"></div>
         </form>
     </div>
 </@base.page>
