@@ -143,10 +143,17 @@ public class AdminController {
     }
 
     @PostMapping("client-new")
-    public String newClient(ClientDto clientDto,
+    public String newClient(@Valid ClientDto clientDto, BindingResult bindingResult, Model model,
                             @RequestParam(required = false) List<Integer> apartmentIds) {
-        clientService.addClient(clientDto, apartmentIds);
-        return REDIRECT_ADMIN_PAGE;
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("client", clientDto);
+        } else {
+            clientService.addClient(clientDto, apartmentIds);
+            model.addAttribute("message", "Клиент успешно добавлен");
+        }
+        return getClientForm(model);
     }
 
     @GetMapping("client-update/{id}")
@@ -155,14 +162,22 @@ public class AdminController {
         model.addAttribute("client", client);
         model.addAttribute("apartments", apartmentService.allApartments());
         model.addAttribute("ownApartments", client.getApartments());
+        model.addAttribute("update", true);
         return "new-client";
     }
 
     @PostMapping("client-update/{id}")
-    public String updateClient(ClientDto clientDto,
+    public String updateClient(@Valid ClientDto clientDto, BindingResult bindingResult, Model model,
                                @RequestParam(required = false) List<Integer> apartmentIds) {
-        clientService.addClient(clientDto, apartmentIds);
-        return REDIRECT_ADMIN_PAGE;
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("client", clientDto);
+        } else {
+            clientService.addClient(clientDto, apartmentIds);
+            model.addAttribute("message", "Клиент успешно изменен");
+        }
+        return getUpdateClientForm(clientDto.getId(), model);
     }
 
     @GetMapping("client-delete/{id}")
