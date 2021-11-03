@@ -7,7 +7,7 @@
     <div class="container w-50">
         <div class="container text-center w-75 mb-3">
             <h6 class="fs-4 w-75 fw-normal rounded-3 w-100 py-1">
-                <#if house??>
+                <#if update??>
                     Изменить данные дома
                 <#else>
                     Добавить дом
@@ -15,26 +15,36 @@
             </h6>
         </div>
         <form class="row w-100" method="post"
-              action="<#if house??>/admin/house-update/${house.getId()}<#else>/admin/house-new</#if>">
+              action="<#if update??>/admin/house-update/${house.getId()}<#else>/admin/house-new</#if>">
             <div class="col-6 mb-3">
                 <label for="companyId">Строительная компания</label>
                 <select class="form-control" name="companyId" id="companyId">
                     <#list companies as company>
                         <option value="${company.getId()}"
-                                <#if house?? && house.getCompany().equals(company)>selected</#if>>
+                                <#if update?? && house.getCompany().equals(company)>selected</#if>>
                             ${company.getName()}</option>
                     </#list>
                 </select>
             </div>
             <div class="col-6 mb-3">
                 <label for="name" class="mb-1">Название</label>
-                <input type="text" class="form-control text-center" name="name" id="name"
+                <input type="text" class="form-control text-center ${(nameError??)?string('is-invalid', '')}" name="name" id="name"
                        value="<#if house??>${house.getName()}</#if>">
+                <#if nameError??>
+                    <div class="invalid-feedback">
+                        ${nameError}
+                    </div>
+                </#if>
             </div>
             <div class="col-12 mb-3 text-center">
                 <label for="address" class="mb-1">Адрес</label>
-                <input type="text" class="form-control text-center" name="address" id="address"
+                <input type="text" class="form-control text-center ${(addressError??)?string('is-invalid', '')}" name="address" id="address"
                        value="<#if house??>${house.getAddress()}</#if>">
+                <#if addressError??>
+                    <div class="invalid-feedback">
+                        ${addressError}
+                    </div>
+                </#if>
             </div>
             <div class="col-4 mb-3 text-center">
                 <label for="startDate" class="mb-1">Начало строительства</label>
@@ -60,9 +70,9 @@
             </div>
             <div class="col-4"></div>
             <div class="col-4">
-                <button class="btn mt-3 btn-lg w-100 ${(house??)?then('btn-success','btn-primary')}"
+                <button class="btn mt-3 btn-lg w-100 ${(update??)?then('btn-success','btn-primary')}"
                         type="submit" id="send-house">
-                    <#if house??>
+                    <#if update??>
                         Изменить
                     <#else>
                         Добавить дом
@@ -70,6 +80,13 @@
                 </button>
             </div>
             <div class="col-4"></div>
+            <#if message??>
+                <div class="col-3"></div>
+                <div class="col-6 mt-2 text-center">
+                    <p id="message" class="border border-success text-dark">${message}</p>
+                </div>
+                <div class="col-3"></div>
+            </#if>
         </form>
     </div>
 </@base.page>

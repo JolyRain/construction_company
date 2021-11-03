@@ -93,9 +93,17 @@ public class AdminController {
     }
 
     @PostMapping("house-new")
-    public String createHouse(HouseDto houseDto, @RequestParam Integer companyId) {
-        houseService.addHouse(houseDto, companyId);
-        return REDIRECT_ADMIN_PAGE;
+    public String createHouse(@Valid HouseDto houseDto, BindingResult bindingResult, Model model,
+                              @RequestParam Integer companyId) {
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("house", houseDto);
+        } else {
+            houseService.addHouse(houseDto, companyId);
+            model.addAttribute("message", "Дом успешно добавлен");
+        }
+        return getHouseForm(model);
     }
 
     @GetMapping("house-update/{id}")
@@ -103,13 +111,22 @@ public class AdminController {
         model.addAttribute("house", houseService.getHouseById(id));
         model.addAttribute("companies", companyService.allCompanies());
         model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        model.addAttribute("update", true);
         return "house-new";
     }
 
     @PostMapping("house-update/{id}")
-    public String updateHouse(HouseDto houseDto, @RequestParam Integer companyId) {
-        houseService.addHouse(houseDto, companyId);
-        return REDIRECT_ADMIN_PAGE;
+    public String updateHouse(@Valid HouseDto houseDto, BindingResult bindingResult, Model model,
+                              @RequestParam Integer companyId) {
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("house", houseDto);
+        } else {
+            houseService.addHouse(houseDto, companyId);
+            model.addAttribute("message", "Дом успешно изменен");
+        }
+        return getUpdateHouseForm(houseDto.getId(), model);
     }
 
     @GetMapping("house-delete/{id}")
