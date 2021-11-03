@@ -9,6 +9,7 @@ import prbd.construction_company.entity.SaleStatus;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ApartmentMapper;
 import prbd.construction_company.repository.ApartmentRep;
+import prbd.construction_company.repository.HouseRep;
 
 import java.util.List;
 import java.util.Set;
@@ -19,11 +20,17 @@ import java.util.stream.Collectors;
 public class ApartmentService {
     private final ApartmentRep apartmentRep;
     private final ApartmentMapper apartmentMapper;
+    private final HouseService houseService;
 
 
     public ApartmentDto addApartment(ApartmentDto apartmentDto) {
         apartmentRep.save(apartmentMapper.toEntity(apartmentDto, ApartmentMapper.CONTEXT));
         return apartmentDto;
+    }
+
+    public ApartmentDto addApartment(ApartmentDto apartmentDto, Integer houseId) {
+        apartmentDto.setHouse(houseService.getHouseById(houseId));
+        return addApartment(apartmentDto);
     }
 
     public ApartmentDto getApartmentById(Integer id) {

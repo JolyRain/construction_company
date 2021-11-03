@@ -105,7 +105,7 @@
             </div>
             <div class="tab-pane fade" id="apartments">
                 <div class="container-fluid w-25">
-                    <a class="btn btn-dark w-100" href="">Добавить хату</a>
+                    <a class="btn btn-dark w-100" href="/admin/apartment-new">Добавить хату</a>
                 </div>
                 <table class="table table-striped">
                     <thead class="thead-dark">
@@ -140,10 +140,10 @@
                             <td>${apartment.getPrice()}</td>
                             <td>${apartment.getStatus().status}</td>
                             <td>
-                                <a class="btn bg-white border-dark btn-sm" href="">Изменить</a>
+                                <a class="btn bg-white border-dark btn-sm" href="/admin/apartment-update/${apartment.id}">Изменить</a>
                             </td>
                             <td>
-                                <a class="btn btn-danger btn-sm" href="">Удалить</a>
+                                <a class="btn btn-danger btn-sm" href="/admin/apartment-delete/${apartment.id}">Удалить</a>
                             </td>
                         </tr>
                     </#list>
@@ -160,6 +160,7 @@
                         <th scope="col">id</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Фамилия</th>
+                        <th scope="col">Собственность</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -170,6 +171,11 @@
                             <td>${client.getId()}</td>
                             <td>${client.getName()}</td>
                             <td>${client.getSurname()}</td>
+                            <td>
+                                <#list client.getApartments() as own>
+                                <p>${own.getHouse().getName()}: №кв-${own.getNumber()}</p>
+                                </#list>
+                            </td>
                             <td>
                                 <a class="btn bg-white border-dark btn-sm"
                                    href="/admin/client-update/${client.getId()}">Изменить</a>

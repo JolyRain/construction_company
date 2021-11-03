@@ -15,6 +15,7 @@ import prbd.construction_company.service.CompanyService;
 import prbd.construction_company.service.HouseService;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -144,12 +145,14 @@ public class AdminController {
     @GetMapping("apartment-new")
     public String getApartmentForm(Model model) {
         model.addAttribute("clients", clientService.allClients());
+        model.addAttribute("houses", houseService.allHouses());
+        model.addAttribute("statuses", SaleStatus.values());
         return "apart-new";
     }
 
     @PostMapping("apartment-new")
-    public String newApartment(ApartmentDto apartmentDto) {
-        apartmentService.addApartment(apartmentDto);
+    public String newApartment(ApartmentDto apartmentDto, @RequestParam Integer houseId) {
+        apartmentService.addApartment(apartmentDto, houseId);
         return REDIRECT_ADMIN_PAGE;
     }
 
@@ -157,6 +160,8 @@ public class AdminController {
     public String getUpdateApartmentForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("apartment", apartmentService.getApartmentById(id));
         model.addAttribute("apartments", apartmentService.allApartments());
+        model.addAttribute("houses", houseService.allHouses());
+        model.addAttribute("statuses", Arrays.asList(SaleStatus.values()));
         return "apart-new";
     }
 

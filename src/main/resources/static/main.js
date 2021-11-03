@@ -15,9 +15,27 @@ function escapeHtml(string) {
     });
 }
 
-function filterInput(element) {
+function filterInput(element, message) {
     element.value = element.value.replace(/[^\d]/g, '');
+    showMessage(element, message)
 }
+
+function showMessage(element, check) {
+    if (!check) return
+    message = 'Поле не может быть пустым или равным нулю'
+    if (element.value <= 0) {
+        $('#message').removeClass('hidden').text(message)
+        $('#send-apart').addClass('disabled')
+        $(element).addClass('border border-danger')
+    } else {
+        $('#message').addClass('hidden')
+        $('#send-apart').removeClass('disabled')
+        $(element).removeClass('border border-danger')
+    }
+}
+
+
+
 
 const ALL = 'ALL'
 
