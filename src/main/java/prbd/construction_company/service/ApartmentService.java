@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ApartmentForFilterDto;
+import prbd.construction_company.dto.ClientDto;
+import prbd.construction_company.entity.SaleStatus;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ApartmentMapper;
 import prbd.construction_company.repository.ApartmentRep;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -29,10 +32,7 @@ public class ApartmentService {
     }
 
     public List<ApartmentDto> allApartments() {
-        return apartmentRep.findAll()
-                .stream()
-                .map(apartment -> apartmentMapper.toDto(apartment, ApartmentMapper.CONTEXT))
-                .collect(Collectors.toList());
+        return apartmentMapper.toDtoList(apartmentRep.findAll(), ApartmentMapper.CONTEXT);
     }
 
     public List<ApartmentForFilterDto> allApartmentsForFilter() {
@@ -44,6 +44,21 @@ public class ApartmentService {
 
     public void deleteApartment(ApartmentDto apartmentDto) {
         apartmentRep.delete(apartmentMapper.toEntity(apartmentDto, ApartmentMapper.CONTEXT));
+    }
+
+    public Set<ApartmentDto> updateStatus(Set<ApartmentDto> apartments) {
+        apartments.forEach(apartment -> {
+            if (apartment.getOwners().isEmpty())
+                apartment.setStatus(SaleStatus.SALE);
+            addApartment(apartment);
+        });
+        return apartments;
+    }
+
+    public ApartmentDto addOwner(ApartmentDto apartment, ClientDto client) {
+        apartment.getOwners().add(client);
+        apartment.setStatus(SaleStatus.SOLD);
+        return apartment;
     }
 
     public void deleteApartment(Integer id) {

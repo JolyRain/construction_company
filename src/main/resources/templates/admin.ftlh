@@ -126,7 +126,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list apartments as apartment>
+                    <#list apartments?sort_by("id") as apartment>
                         <tr>
                             <td>${apartment.getId()}</td>
                             <td><img src="${util.getImage(apartment.getLayoutImg())}" width="100%" height="100%"></td>

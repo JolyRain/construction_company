@@ -7,6 +7,8 @@ import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ApartmentForFilterDto;
 import prbd.construction_company.entity.Apartment;
 
+import java.util.List;
+
 @Mapper
 public interface ApartmentMapper {
     CycleAvoidingMappingContext CONTEXT = new CycleAvoidingMappingContext();
@@ -20,5 +22,7 @@ public interface ApartmentMapper {
     @Mapping(target = "companyId", source = "entity.house.company.id")
     @Mapping(target = "houseId", source = "entity.house.id")
     ApartmentForFilterDto toDtoForFilter(Apartment entity);
+
+    List<ApartmentDto> toDtoList(List<Apartment> entityList, @Context CycleAvoidingMappingContext context);
 
 }

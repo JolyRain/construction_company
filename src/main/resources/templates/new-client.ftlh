@@ -27,10 +27,10 @@
             <#if client??>
                 <#assign ownApartmentIds = client.getApartments()?map(apart -> apart.id)>
             </#if>
-            <#list apartments as apart>
+            <#list apartments?sort_by("id") as apart>
                 <div class="col-4 form-check">
                     <input class="form-check-input" type="checkbox" value="${apart.id}" name="apartmentIds" id="apart"
-                            <#if ownApartmentIds?seq_contains(apart.id)>checked</#if>>
+                           <#if ownApartmentIds?? && ownApartmentIds?seq_contains(apart.id)>checked</#if>>
                     <label class="form-check-label" for="apart">
                         ${apart.getHouse().getName()}, №кв: ${apart.getNumber()}
                     </label>
@@ -38,7 +38,8 @@
             </#list>
             <div class="col-4"></div>
             <div class="col-4">
-                <button class="btn mt-3 btn-lg w-100 ${(client??)?then('btn-success','btn-primary')}" type="submit" id="send-client">
+                <button class="btn mt-3 btn-lg w-100 ${(client??)?then('btn-success','btn-primary')}" type="submit"
+                        id="send-client">
                     ${(client??)?then("Изменить", "Добавить клиента")}
                 </button>
             </div>

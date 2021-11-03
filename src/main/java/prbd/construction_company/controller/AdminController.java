@@ -8,12 +8,14 @@ import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.dto.CompanyDto;
 import prbd.construction_company.dto.HouseDto;
+import prbd.construction_company.entity.SaleStatus;
 import prbd.construction_company.service.ApartmentService;
 import prbd.construction_company.service.ClientService;
 import prbd.construction_company.service.CompanyService;
 import prbd.construction_company.service.HouseService;
 
 import java.time.format.DateTimeFormatter;
+import java.util.EnumMap;
 import java.util.List;
 
 @RequiredArgsConstructor
