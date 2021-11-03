@@ -13,14 +13,14 @@ import java.util.Set;
 public class Apartment {
 
     @Id
-    @Column(name = "apart_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int number;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house", nullable = false)
+    @JoinColumn(name = "house_id", nullable = false)
     private House house;
 
     @Column(name = "entrance", nullable = false)
