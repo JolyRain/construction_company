@@ -17,7 +17,7 @@ function escapeHtml(string) {
 
 function filterInput(element, message) {
     element.value = element.value.replace(/[^\d]/g, '');
-    showMessage(element, message)
+    // showMessage(element, message)
 }
 
 function showMessage(element, check) {

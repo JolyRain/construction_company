@@ -197,9 +197,17 @@ public class AdminController {
     }
 
     @PostMapping("apartment-new")
-    public String newApartment(ApartmentDto apartmentDto, @RequestParam Integer houseId) {
-        apartmentService.addApartment(apartmentDto, houseId);
-        return REDIRECT_ADMIN_PAGE;
+    public String newApartment(@Valid ApartmentDto apartmentDto, BindingResult bindingResult, Model model,
+                               @RequestParam Integer houseId) {
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("apartment", apartmentDto);
+        } else {
+            apartmentService.addApartment(apartmentDto, houseId);
+            model.addAttribute("message", "Квартира успешно добавлена");
+        }
+        return getApartmentForm(model);
     }
 
     @GetMapping("apartment-update/{id}")
@@ -208,13 +216,22 @@ public class AdminController {
         model.addAttribute("apartments", apartmentService.allApartments());
         model.addAttribute("houses", houseService.allHouses());
         model.addAttribute("statuses", Arrays.asList(SaleStatus.values()));
+        model.addAttribute("update", true);
         return "apart-new";
     }
 
     @PostMapping("apartment-update/{id}")
-    public String updateApartment(ApartmentDto apartmentDto) {
+    public String updateApartment(@Valid ApartmentDto apartmentDto, BindingResult bindingResult, Model model) {
         apartmentService.addApartment(apartmentDto);
-        return REDIRECT_ADMIN_PAGE;
+        if (bindingResult.hasErrors()) {
+            var errorsMap = validationService.errorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("apartment", apartmentDto);
+        } else {
+            apartmentService.addApartment(apartmentDto);
+            model.addAttribute("message", "Квартира успешно изменена");
+        }
+        return getUpdateApartmentForm(apartmentDto.getId(), model);
     }
 
     @GetMapping("apartment-delete/{id}")
