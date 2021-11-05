@@ -48,7 +48,7 @@ public class AdminController {
     @PostMapping("company-new")
     public String createCompany(@Valid CompanyDto companyDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("company", companyDto);
         } else {
@@ -68,7 +68,7 @@ public class AdminController {
     @PostMapping("company-update/{id}")
     public String updateCompany(@Valid CompanyDto companyDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("company", companyDto);
         } else {
@@ -96,7 +96,7 @@ public class AdminController {
     public String createHouse(@Valid HouseDto houseDto, BindingResult bindingResult, Model model,
                               @RequestParam Integer companyId) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("house", houseDto);
         } else {
@@ -119,7 +119,7 @@ public class AdminController {
     public String updateHouse(@Valid HouseDto houseDto, BindingResult bindingResult, Model model,
                               @RequestParam Integer companyId) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("house", houseDto);
         } else {
@@ -146,7 +146,7 @@ public class AdminController {
     public String newClient(@Valid ClientDto clientDto, BindingResult bindingResult, Model model,
                             @RequestParam(required = false) List<Integer> apartmentIds) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("client", clientDto);
         } else {
@@ -170,7 +170,7 @@ public class AdminController {
     public String updateClient(@Valid ClientDto clientDto, BindingResult bindingResult, Model model,
                                @RequestParam(required = false) List<Integer> apartmentIds) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("client", clientDto);
         } else {
@@ -200,7 +200,7 @@ public class AdminController {
     public String newApartment(@Valid ApartmentDto apartmentDto, BindingResult bindingResult, Model model,
                                @RequestParam Integer houseId) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("apartment", apartmentDto);
         } else {
@@ -221,14 +221,14 @@ public class AdminController {
     }
 
     @PostMapping("apartment-update/{id}")
-    public String updateApartment(@Valid ApartmentDto apartmentDto, BindingResult bindingResult, Model model) {
-        apartmentService.addApartment(apartmentDto);
+    public String updateApartment(@Valid ApartmentDto apartmentDto, BindingResult bindingResult, Model model,
+                                  @RequestParam Integer houseId) {
         if (bindingResult.hasErrors()) {
-            var errorsMap = validationService.errorsMap(bindingResult);
+            var errorsMap = validationService.getErrorsMap(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("apartment", apartmentDto);
         } else {
-            apartmentService.addApartment(apartmentDto);
+            apartmentService.addApartment(apartmentDto, houseId);
             model.addAttribute("message", "Квартира успешно изменена");
         }
         return getUpdateApartmentForm(apartmentDto.getId(), model);

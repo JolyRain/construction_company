@@ -21,7 +21,7 @@
                 <select class="form-control" name="companyId" id="companyId">
                     <#list companies as company>
                         <option value="${company.getId()}"
-                                <#if update?? && house.getCompany().equals(company)>selected</#if>>
+                                <#if update?? && house.getCompany().getId() == company.getId()>selected</#if>>
                             ${company.getName()}</option>
                     </#list>
                 </select>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-group mb-3 text-center">
-                <label for="photo" class="mb-1">Логотип</label>
+                <label for="photo" class="mb-1">Фото</label>
                 <input type="text" class="form-control text-center" name="photo" id="photo"
                        placeholder="Вставьте ссылку на картинку"
                        value="<#if house??>${house.getPhoto()}</#if>">

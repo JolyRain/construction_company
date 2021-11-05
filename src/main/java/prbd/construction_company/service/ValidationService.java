@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Service
 public class ValidationService {
 
-    public Map<String, String> errorsMap(BindingResult bindingResult) {
+    public Map<String, String> getErrorsMap(BindingResult bindingResult) {
         return bindingResult.getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(

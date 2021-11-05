@@ -9,7 +9,6 @@ import prbd.construction_company.entity.SaleStatus;
 import prbd.construction_company.exception.NotFoundException;
 import prbd.construction_company.mapper.ApartmentMapper;
 import prbd.construction_company.repository.ApartmentRep;
-import prbd.construction_company.repository.HouseRep;
 
 import java.util.List;
 import java.util.Set;

@@ -30,7 +30,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">id</th>
+<#--                        <th scope="col">id</th>-->
                         <th scope="col">Название</th>
                         <th scope="col">Описание</th>
                         <th scope="col">Логотип</th>
@@ -41,7 +41,7 @@
                     <tbody>
                     <#list companies as company>
                         <tr>
-                            <td>${company.getId()}</td>
+<#--                            <td>${company.getId()}</td>-->
                             <td>${company.getName()}</td>
                             <td>${company.getDescription()}</td>
                             <td><img src="${util.getImage(company.getLogo())}" width="50%" height="50%" alt=""></td>
@@ -65,7 +65,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">id</th>
+<#--                        <th scope="col">id</th>-->
                         <th scope="col">Название</th>
                         <th scope="col">Адрес</th>
                         <th scope="col">Компания</th>
@@ -80,7 +80,7 @@
                     <tbody>
                     <#list houses as house>
                         <tr>
-                            <td>${house.getId()}</td>
+<#--                            <td>${house.getId()}</td>-->
                             <td>${house.getName()}</td>
                             <td>${house.getAddress()}</td>
                             <td>${house.getCompany().getName()}</td>
@@ -110,7 +110,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">id</th>
+<#--                        <th scope="col">id</th>-->
                         <th scope="col">Планировка</th>
                         <th scope="col">Дом</th>
                         <th scope="col">Подъезд</th>
@@ -128,7 +128,7 @@
                     <tbody>
                     <#list apartments?sort_by("id") as apartment>
                         <tr>
-                            <td>${apartment.getId()}</td>
+<#--                            <td>${apartment.getId()}</td>-->
                             <td><img src="${util.getImage(apartment.getLayoutImg())}" width="100%" height="100%"></td>
                             <td>${apartment.getHouse().getName()}</td>
                             <td>${apartment.getEntranceNumber()}</td>
@@ -157,7 +157,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">id</th>
+<#--                        <th scope="col">id</th>-->
                         <th scope="col">Имя</th>
                         <th scope="col">Фамилия</th>
                         <th scope="col">Собственность</th>
@@ -168,7 +168,7 @@
                     <tbody>
                     <#list clients as client>
                         <tr>
-                            <td>${client.getId()}</td>
+<#--                            <td>${client.getId()}</td>-->
                             <td>${client.getName()}</td>
                             <td>${client.getSurname()}</td>
                             <td>

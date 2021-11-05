@@ -9,7 +9,6 @@ import prbd.construction_company.entity.House;
 
 @Repository
 public interface HouseRep extends JpaRepository<House, Integer> {
-    Iterable<House> findAllByCompany(Company company);
 
     @Query("select max (a.price) from House h inner join Apartment a on h.id = a.house.id where h = :house")
     Integer maxApartmentPrice(@Param("house") House house);

@@ -53,13 +53,6 @@ public class ClientService {
         return clientDto;
     }
 
-
-    public List<ApartmentDto> getOwnApartments(ClientDto clientDto) {
-        var ownApartments = clientRep.findOwnApartments(
-                clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
-        return apartmentMapper.toDtoList(ownApartments, ApartmentMapper.CONTEXT);
-    }
-
     public void deleteClient(ClientDto clientDto) {
         clientRep.delete(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
     }
