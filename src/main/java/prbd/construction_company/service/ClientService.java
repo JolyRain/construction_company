@@ -2,13 +2,14 @@ package prbd.construction_company.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import prbd.construction_company.dto.ApartmentDto;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.exception.NotFoundException;
+import prbd.construction_company.mapper.ApartmentMapper;
 import prbd.construction_company.mapper.ClientMapper;
 import prbd.construction_company.repository.ClientRep;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -16,12 +17,11 @@ public class ClientService {
 
     private final ClientRep clientRep;
     private final ClientMapper clientMapper;
+    private final ApartmentService apartmentService;
+    private final ApartmentMapper apartmentMapper;
 
     public List<ClientDto> allClients() {
-        return clientRep.findAll()
-                .stream()
-                .map(client -> clientMapper.toDto(client, ClientMapper.CONTEXT))
-                .collect(Collectors.toList());
+        return clientMapper.toDtoList(clientRep.findAll(), ClientMapper.CONTEXT);
     }
 
     public ClientDto getClientById(Integer id) {
@@ -31,6 +31,25 @@ public class ClientService {
 
     public ClientDto addClient(ClientDto clientDto) {
         clientRep.save(clientMapper.toEntity(clientDto, ClientMapper.CONTEXT));
+        return clientDto;
+    }
+
+    public ClientDto addClient(ClientDto clientDto, List<Integer> apartmentIds) {
+        apartmentService.updateStatus(clientDto.getApartments());
+        clientDto.getApartments().clear();
+        return addClient(addOwnApartments(clientDto, apartmentIds));
+    }
+
+    public ClientDto addOwnApartments(ClientDto clientDto, List<Integer> apartmentIds) {
+        if (apartmentIds == null) {
+            return clientDto;
+        }
+        apartmentIds.forEach(apartmentId -> {
+            var apartment = apartmentService.getApartmentById(apartmentId);
+            clientDto.getApartments().add(apartment);
+            apartmentService.addOwner(apartment, clientDto);
+            apartmentService.addApartment(apartment);
+        });
         return clientDto;
     }
 

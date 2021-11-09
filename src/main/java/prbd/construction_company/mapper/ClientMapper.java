@@ -1,9 +1,10 @@
 package prbd.construction_company.mapper;
 
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
 import prbd.construction_company.dto.ClientDto;
 import prbd.construction_company.entity.Client;
+
+import java.util.List;
 
 @Mapper
 public interface ClientMapper {
@@ -12,4 +13,6 @@ public interface ClientMapper {
     ClientDto toDto(Client entity, @Context CycleAvoidingMappingContext context);
 
     Client toEntity(ClientDto dto, @Context CycleAvoidingMappingContext context);
+
+    List<ClientDto> toDtoList(List<Client> entityList, @Context CycleAvoidingMappingContext context);
 }
